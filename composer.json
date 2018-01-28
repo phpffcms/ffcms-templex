@@ -1,0 +1,30 @@
+{
+  "name": "phpffcms/ffcms-templex",
+  "description": "Simple html template engine for ffcms on native php-html syntax",
+  "type": "library",
+  "keywords": [
+    "php",
+    "template-engine",
+    "template",
+    "native",
+    "html5",
+    "bootstrap"
+  ],
+  "homepage": "http://ffcms.org",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pyatinskyi M.M.",
+      "email": "zenn@ffcms.org",
+      "homepage": "http://ffcms.ru"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ffcms\\Templex\\": "src/"
+    }
+  }
+}
