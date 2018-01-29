@@ -4,6 +4,7 @@ namespace Ffcms\Templex;
 
 use Ffcms\Templex\Engine\Renderer;
 use Ffcms\Templex\Helper\Html\Dom;
+use Ffcms\Templex\Helper\Html\Table;
 
 
 /**
@@ -20,10 +21,6 @@ class Template
     private $dir;
 
     private $sections;
-
-    public $table;
-    public $listing;
-
 
     /**
      * Template constructor. Construct instance with basepath or not
@@ -123,4 +120,16 @@ class Template
     {
         return (new Dom());
     }
+
+    /**
+     * Get table instance
+     * @param array|null $properties
+     * @return Table
+     */
+    public function table(?array $properties = null): Table
+    {
+        return Table::factory($properties);
+    }
+
+
 }

@@ -2,15 +2,18 @@
 
 namespace Ffcms\Templex\Helper\Html;
 
+use Ffcms\Templex\Helper\Html\Table\Thead;
+
 
 class Table
 {
     private $tableProperties;
+
     private $dom;
 
+    /** @var Thead */
     private $thead;
     private $tbody;
-    private $table;
 
     /**
      * Table constructor. Pass table properties inside
@@ -39,13 +42,18 @@ class Table
             $items = $items();
         }
 
-        // @todo: parse items & properties and build thead html code in $this->thead
+        // check if thead defined and titles are iterable
+        if (is_iterable($items)) {
+            // throw exception
+            $this->thead = new Thead($properties, $items);
+        }
 
         return $this;
     }
 
     public function display()
     {
+        return '';
         // @todo: build output html table
     }
 }

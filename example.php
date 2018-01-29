@@ -9,6 +9,4 @@ $tpl->render('block/body', ['var' => 'this is value']);
 
 
 // render layout. use $tpl->section() of $html item
-$layout = $tpl->render('layout/main');
-
-echo $layout;
+echo $tpl->render('layout');

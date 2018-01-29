@@ -1,15 +1,25 @@
 <?php 
 
-/** @var \Ffcms\Templex\Template $self */
+/** @var \Ffcms\Templex\Template $tpl */
 /** @var \Ffcms\Templex\Engine\Renderer $this */
+
+/** @var string $var */
 
 $this->title = "Main block";
 ?>
 
-<?php $this->section('body') ?>
+<?php $tpl->section('body') ?>
 
-<h1>Body</h1>
+    <h1>Body</h1>
 
-<p>Body element. Var is: <?= $self->var ?>
+    <p>Body element. Var is: <?= $var ?>
 
-<?php $this->stop() ?>
+    <!-- table example -->
+    <?= $tpl->table(['class' => 'table table-striped'])
+        ->thead(['id' => 'table-one'], function(){
+            for ($i=0;$i<=5;$i++) {
+                yield ['text' => 'col ' . $i];
+            }
+        })->display(); ?>
+
+<?php $tpl->stop() ?>

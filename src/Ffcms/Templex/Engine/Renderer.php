@@ -60,7 +60,7 @@ class Renderer
             }
         }
 
-        $self = $this->_template;
+        $tpl = $this->_template;
         $global = $this->buildGlobals();
 
         $result = null;
