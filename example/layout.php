@@ -7,6 +7,7 @@
 <head>
     <title><?= $this->title ?></title>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <?= $tpl->getSection('css') ?>
 </head>
 <body>
 
@@ -38,6 +39,8 @@ echo $tpl->table(['class' => 'test-table', 'style' => 'border: 1px solid'])
         return $body;
     })->display();
 ?>
+
+<?= $tpl->getSection('javascript') ?>
 
 </body>
 </html>
