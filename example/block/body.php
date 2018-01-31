@@ -14,12 +14,4 @@ $this->title = "Main block";
 
     <p>Body element. Var is: <?= $var ?>
 
-    <!-- table example -->
-    <?= $tpl->table(['class' => 'table table-striped'])
-        ->thead(['id' => 'table-one'], function(){
-            for ($i=0;$i<=5;$i++) {
-                yield ['text' => 'col ' . $i];
-            }
-        })->display(); ?>
-
 <?php $tpl->stop() ?>
