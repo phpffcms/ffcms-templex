@@ -63,6 +63,7 @@ class Renderer
         $tpl = $this->_template;
         $global = $this->buildGlobals();
 
+
         $result = null;
         ob_start();
         try {

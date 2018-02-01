@@ -4,6 +4,7 @@ namespace Ffcms\Templex;
 
 use Ffcms\Templex\Engine\Renderer;
 use Ffcms\Templex\Helper\Html\Dom;
+use Ffcms\Templex\Helper\Html\Listing;
 use Ffcms\Templex\Helper\Html\Table;
 
 
@@ -25,10 +26,13 @@ class Template
     /**
      * Template constructor. Construct instance with basepath or not
      * @param string $tplDir
+     * @throws \Exception
      */
     public function __construct(string $tplDir)
     {
         $this->dir = $tplDir;
+        // catch buffering errors handler on shutdown action
+        register_shutdown_function([$this, 'shutdown']);
     }
 
     /**
@@ -80,7 +84,7 @@ class Template
      */
     public function section(string $name, int $type = self::SECTION_SET): void
     {
-        ob_start(function($buffer) use ($name, $type) {
+        ob_start(function ($buffer) use ($name, $type) {
             //global $this;
             switch ($type) {
                 case static::SECTION_SET:
@@ -131,5 +135,30 @@ class Template
         return Table::factory($properties);
     }
 
+    /**
+     * Get listing instance
+     * @param string $type
+     * @param array|null $properties
+     * @return Listing
+     */
+    public function listing(string $type, ?array $properties): Listing
+    {
+        return Listing::factory($type, $properties);
+    }
+
+    /**
+     * Check if fatal error in buffer exist and throw real exception
+     * @throws \Exception
+     */
+    public static function shutdown()
+    {
+        // stop any buffering if break fatal error
+        ob_end_clean();
+        // get last error
+        $error = error_get_last();
+        if ($error['type'] === E_ERROR) {
+            throw new \Exception($error['message']);
+        }
+    }
 
 }
