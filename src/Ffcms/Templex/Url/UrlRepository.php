@@ -32,10 +32,10 @@ class UrlRepository
      * @param string|null $subdir
      * @return UrlRepository
      */
-    public static function factory(?string $url = null, ?string $subdir = null)
+    public static function factory()
     {
         if (!self::$instance) {
-            self::$instance = new self($url, $subdir);
+            self::$instance = new self();
         }
 
         return self::$instance;
