@@ -6,14 +6,18 @@ use Ffcms\Templex\Helper\Html\Table\Selectize;
 use Ffcms\Templex\Helper\Html\Table\Sorter;
 use Ffcms\Templex\Helper\Html\Table\Tbody;
 use Ffcms\Templex\Helper\Html\Table\Thead;
+use League\Plates\Engine;
+use League\Plates\Extension\ExtensionInterface;
 
 
 /**
  * Class Table. HTML table code builder
  * @package Ffcms\Templex\Helper\Html
  */
-class Table implements HelperInterface
+class Table implements ExtensionInterface
 {
+    private $engine;
+
     private $tableProperties;
 
     /** @var Selectize */
@@ -26,22 +30,25 @@ class Table implements HelperInterface
     private $tbody;
 
     /**
-     * Table constructor. Pass table properties inside
-     * @param array|null $properties
-     */
-    public function __construct(array $properties = null)
-    {
-        $this->tableProperties = $properties;
-    }
-
-    /**
-     * Get instance of new table
+     * Factory method. Get instance object for new table
      * @param array|null $p
      * @return Table
      */
     public static function factory(array $p = null)
     {
-        return new self($p);
+        $instance = new self();
+        $instance->tableProperties = $p;
+        return $instance;
+    }
+
+    /**
+     * Register table helper
+     * @param Engine $engine
+     */
+    public function register(Engine $engine)
+    {
+        $this->engine = $engine;
+        $this->engine->registerFunction('table', [$this, 'factory']);
     }
 
     /**
@@ -157,5 +164,13 @@ class Table implements HelperInterface
         }
 
         return $code;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function __toString()
+    {
+        return $this->display();
     }
 }

@@ -4,9 +4,13 @@ namespace Ffcms\Templex\Helper\Html;
 
 
 use Ffcms\Templex\Helper\Html\Listing\Li;
+use League\Plates\Engine;
+use League\Plates\Extension\ExtensionInterface;
 
-class Listing implements HelperInterface
+class Listing implements ExtensionInterface
 {
+    private $engine;
+
     private $type;
     private $properties;
 
@@ -14,14 +18,13 @@ class Listing implements HelperInterface
     private $li;
 
     /**
-     * Listing constructor.
-     * @param string $type
-     * @param array|null $properties
+     * Register extension in plates.
+     * @param Engine $engine
      */
-    public function __construct(string $type, ?array $properties = null)
+    public function register(Engine $engine)
     {
-        $this->type = $type;
-        $this->properties = $properties;
+        $this->engine = $engine;
+        $this->engine->registerFunction('listing', [$this, 'factory']);
     }
 
     /**
@@ -32,7 +35,10 @@ class Listing implements HelperInterface
      */
     public static function factory(string $type, ?array $properties = null)
     {
-        return new self($type, $properties);
+        $instance = new self();
+        $instance->type = $type;
+        $instance->properties= $properties;
+        return $instance;
     }
 
     /**
@@ -64,4 +70,11 @@ class Listing implements HelperInterface
         }, $this->properties);
     }
 
+    /**
+     * @return null|string
+     */
+    public function __toString(): ?string
+    {
+        return $this->display();
+    }
 }

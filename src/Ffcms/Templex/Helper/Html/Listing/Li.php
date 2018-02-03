@@ -88,7 +88,7 @@ class Li
         return (new Dom())->li(function() use ($item){
             $text = $item['text'];
             if (!$item['html']) {
-                $text = htmlentities($text, null, 'UTF-8');
+                $text = htmlspecialchars($text, null, 'UTF-8');
             }
 
             return $text;

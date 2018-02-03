@@ -67,7 +67,7 @@ class Tbody implements RenderElement
                             }
 
                             if (!$column['html']) {
-                                $text = htmlentities($text, $flat, 'UTF-8');
+                                $text = htmlspecialchars($text, $flag, 'UTF-8');
                             }
 
                             // process selectize features

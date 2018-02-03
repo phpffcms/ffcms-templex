@@ -68,7 +68,7 @@ class Thead implements RenderElement
                             if (isset($item['flag'])) {
                                 $flag = $item['flag'];
                             }
-                            $text = htmlentities($text, $flag, 'UTF-8');
+                            $text = htmlspecialchars($text, $flag, 'UTF-8');
                         }
 
                         // check if selectize used and apply it
