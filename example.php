@@ -1,9 +1,11 @@
 <?php
 
-$loader = require __DIR__ . '/vendor/autoload.php';
-$loader->add('Ffcms\\', __DIR__ . '/vendor/phpffcms/ffcms-templex/src');
+require __DIR__ . './vendor/autoload.php';
 
-$tpl = new \Ffcms\Templex\Engine(__DIR__ . '/example');
-$tpl->loadExtensions([new \Ffcms\Templex\Helper\Html\Table(), new \Ffcms\Templex\Helper\Html\Listing()]);
+$tpl = new \Ffcms\Templex\Template(__DIR__ . '/example');
 
-echo $tpl->render('block/body', ['test' => 'some value']);
+// render single template and save all ->section() in $tpl instance
+$tpl->render('block/body', ['var' => 'this is value']);
+
+// render layout. use $tpl->section() of $html item
+echo $tpl->render('layout');

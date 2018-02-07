@@ -5,7 +5,10 @@ namespace Ffcms\Templex\Helper\Html\Listing;
 use Ffcms\Templex\Helper\Html\Dom;
 use Ffcms\Templex\Url\Url;
 
-
+/**
+ * Class Li. Build <li> element
+ * @package Ffcms\Templex\Helper\Html\Listing
+ */
 class Li
 {
     private $items;
@@ -62,7 +65,7 @@ class Li
         return (new Dom())->li(function() use ($item, $url){ // <li><li> container
             $ahrefProperties = array_merge(['href' => $url, (array)$item['linkProperties']]);
             // check if link seems like current and mark "active"
-            if (is_array($item['link']) && (new Url())->isLikeCurrent($item['link'])) {
+            if (is_array($item['link']) && $this->isCurrentUrl($item['link'], (bool)$item['urlEqual'])) {
                 $ahrefProperties = array_merge($ahrefProperties, $item['active']);
             }
 
@@ -75,6 +78,18 @@ class Li
                 return $text;
             }, $ahrefProperties);
         }, $item['properties']);
+    }
+
+    /**
+     * Compare if $link array is equal to current pathway
+     * @param array $link
+     * @param bool $hardCompare
+     * @return bool
+     */
+    private function isCurrentUrl(array $link, bool $hardCompare = false)
+    {
+        $url = new Url();
+        return ($hardCompare ? $url->isEqualCurrent($link) : $url->isLikeCurrent($link));
     }
 
     /**

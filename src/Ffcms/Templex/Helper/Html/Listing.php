@@ -7,6 +7,10 @@ use Ffcms\Templex\Helper\Html\Listing\Li;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 
+/**
+ * Class Listing. Simple create ul*li lists.
+ * @package Ffcms\Templex\Helper\Html
+ */
 class Listing implements ExtensionInterface
 {
     private $engine;
@@ -37,15 +41,15 @@ class Listing implements ExtensionInterface
     {
         $instance = new self();
         $instance->type = $type;
-        $instance->properties= $properties;
+        $instance->properties = $properties;
         return $instance;
     }
 
     /**
-     * @param array|null $properties
+     * Build <li><li> from items array
      * @param array|\Closure $items
      */
-    public function li(?array $properties = null, $items)
+    public function li($items)
     {
         // make closure call
         if (is_callable($items)) {
@@ -66,6 +70,9 @@ class Listing implements ExtensionInterface
     public function display(): ?string
     {
         return (new Dom())->{$this->type}(function() {
+            if (!$this->li) {
+                return null;
+            }
             return $this->li->html();
         }, $this->properties);
     }

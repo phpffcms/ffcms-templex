@@ -1,17 +1,32 @@
 <?php
 
-/** @var Ffcms\Templex\Template\Template $this */
+use Ffcms\Templex\Template;
 
-$this->layout('layout', ['title' => 'lol kek']);
+/** @var \Ffcms\Templex\Template $tpl */
+/** @var \Ffcms\Templex\Engine\Renderer $this */
 
+/** @var string $var */
+
+$this->title = "Main block";
 ?>
-<?php $this->start('body') ?>
+<!-- css block extend -->
+<?php $tpl->section('css', Template::SECTION_APPEND) ?>
+<style>
+    .someclass {
+        padding: 0;
+    }
+</style>
+<?php $tpl->stop() ?>
 
-<h1>Hello world</h1>
-<?php $this->insert('block/depend') ?>
+<!-- main section extend -->
+<?php $tpl->section('body') ?>
+
+<p>Variable $var="<?= $var ?>"</p>
+
 
 <p>~ Table example:</p>
-<?= $this->table(['class' => 'test-table', 'style' => 'border: 1px solid'])
+<!-- table example -->
+<?= $tpl->table(['class' => 'test-table', 'style' => 'border: 1px solid'])
     ->selectize(0, 'inputCol')
     ->sortable([0 => 'id', 1 => 'colmn1'])
     ->thead(['id' => 'test-head-id'], function(){
@@ -33,15 +48,28 @@ $this->layout('layout', ['title' => 'lol kek']);
 ?>
 
 <p>~ Listing example:</p>
-<?= $this->listing('ul', ['class' => 'nav'])
-    ->li(['class' => 'nav-item'], [
-        ['text' => 'Item #1'],
-        ['text' => 'Item #2 with properties', 'properties' => ['class' => 'nav-text']],
-        ['text' => 'Link #1', 'link' => ['controller/action', ['id' => 1]], 'properties' => ['class' => 'nav-item']]
-    ])->display(); ?>
 
-<?php $this->end(); ?>
+<?= $tpl->listing('ul', ['class' => 'nav'])
+    ->li(['class' => 'nav'], function(){
+        $res = [];
+        for ($i = 1; $i<=10; $i++) {
+            if ($i % 2) {
+                $res[] = ['link' => ['controller/action', $i], 'text' => 'link: ' . $i, 'properties' => ['class' => 'nav-item']];
+            } else {
+                $res[] = ['text' => 'index: ' . $i, 'properties' => ['class' => 'nav-item']];
+            }
+        }
+        return $res;
+    })->display(); ?>
 
-<?php $this->push('javascript') ?>
-<script>console.log('some javascript render');</script>
-<?php $this->end(); ?>
+<?php $tpl->stop() ?>
+
+
+<!-- javascript block extend -->
+<?php $tpl->section('javascript', Template::SECTION_APPEND) ?>
+<script>
+    $(document).ready(function(){
+        console.log('extend 1');
+    });
+</script>
+<?php $tpl->stop() ?>

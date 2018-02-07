@@ -64,6 +64,11 @@ class Url
      */
     public static function to(string $controllerAction, ?array $arguments = null, ?array $query = null)
     {
+        // check if link is looks like anchor (starts with #)
+        if ($controllerAction[0] === '#') {
+            return $controllerAction;
+        }
+
         $controllerAction = trim($controllerAction, '/');
         // @todo: pass url/subdir to instance initialization
         $worker = new self();
