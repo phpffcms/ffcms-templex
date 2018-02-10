@@ -35,6 +35,9 @@ namespace Ffcms\Templex\Helper\Html;
  * @method string dd(\Closure $obj, array $properties = null)
  * @method string form(\Closure $obj, array $properties = null)
  * @method string label(\Closure $obj, array $properties = null)
+ * @method string textarea(\Closure $obj, array $properties = null)
+ * @method string select(\Closure $obj, array $properties = null)
+ * @method string option(\Closure $obj, array $properties = null)
  * @method string button(\Closure $obj, array $properties = null)
  */
 class Dom
@@ -51,7 +54,7 @@ class Dom
         'b', 's', 'strong', 'strike', 'u', 'span',
         'ul', 'ol', 'li',
         'table', 'thead', 'tbody', 'tr', 'td', 'th', 'dt', 'dd',
-        'form', 'label',
+        'form', 'label', 'textarea', 'select', 'option',
         'button'
     ];
 

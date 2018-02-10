@@ -9,6 +9,10 @@ use Ffcms\Templex\Helper\Html\Form\Field\FieldInterface;
  * Class Field. Make html code of form fields.
  * @package Ffcms\Templex\Helper\Html\Form
  * @method text(string $name, ?array $properties = null, ?string $helper = null)
+ * @method textarea(string $name, ?array $properties = null, ?string $helper = null)
+ * @method select(string $name, ?array $properties = null, ?string $helper = null)
+ * @method password(string $name, ?array $properties = null, ?string $helper = null)
+ * @method multiselect(string $name, ?array $properties = null, ?string $helper = null)
  */
 class Field
 {

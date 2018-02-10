@@ -34,7 +34,7 @@ class Form implements ExtensionInterface
      * @param array|null $properties
      * @return Form
      */
-    public static function factory(ModelInterface $model, array $properties = null): Form
+    public static function factory(ModelInterface $model, ?array $properties = null): Form
     {
         $engine = self::$engine;
 

@@ -39,8 +39,8 @@ abstract class Model implements ModelInterface
             $text = (string)$labels[$name];
         }
 
-        // if text is still null or empty - set same with label name
-        return $text ?? $name;
+        // if text is still null or empty - display attribute variable name
+        return (!$text || strlen($text) < 1 ? ucfirst(mb_strtolower($name)) : $text);
     }
 
     /**

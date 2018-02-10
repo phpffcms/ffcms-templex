@@ -3,7 +3,9 @@
 namespace Ffcms\Templex;
 
 use Ffcms\Templex\Helper\Html\Dom;
+use Ffcms\Templex\Helper\Html\Form;
 use Ffcms\Templex\Helper\Html\Listing;
+use Ffcms\Templex\Helper\Html\Pagination;
 use Ffcms\Templex\Helper\Html\Table;
 use Ffcms\Templex\Template\Template;
 
@@ -22,5 +24,18 @@ class Engine extends \League\Plates\Engine
     public function make($name)
     {
         return new Template($this, $name);
+    }
+
+    /**
+     * Load default extensions
+     */
+    public function loadDefaultExtensions(): void
+    {
+        $this->loadExtensions([
+            new Listing(),
+            new Table(),
+            new Pagination(),
+            new Form()
+        ]);
     }
 }

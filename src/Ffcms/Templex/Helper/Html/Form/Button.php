@@ -9,7 +9,7 @@ use League\Plates\Engine;
 /**
  * Class Button
  * @package Ffcms\Templex\Helper\Html\Form
- * @method Submit(string $text, ?array $properties = null)
+ * @method submit(string $text, ?array $properties = null)
  */
 class Button
 {
