@@ -2,7 +2,10 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
+/**
+ * Class Multiselect. Select * options with multiple array features
+ * @package Ffcms\Templex\Helper\Html\Form\Field
+ */
 class Multiselect extends StandardField
 {
 

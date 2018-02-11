@@ -16,8 +16,6 @@ class Button
     private $model;
     private $engine;
 
-    private $buttons;
-
     /**
      * Button constructor.
      * @param ModelInterface $model
@@ -33,28 +31,21 @@ class Button
      * Make buttons magic callback
      * @param string $type
      * @param array|null $arguments
+     * @return string|null
      */
-    public function __call(string $type, ?array $arguments = null): void
+    public function __call(string $type, ?array $arguments = null): ?string
     {
         if (!$arguments || !isset($arguments[0]) || !is_string($arguments[0])) {
-            return;
+            return null;
         }
 
         $callback = 'Ffcms\Templex\Helper\Html\Form\Button\\' . ucfirst($type);
         if (!class_exists($callback)) {
-            return;
+            return null;
         }
         /** @var ButtonInterface $class */
         $class = new $callback($this->engine);
-        $this->buttons[] = $class->html($arguments[0], $arguments[1]);
+        return $class->html($arguments[0], $arguments[1]);
     }
 
-    /**
-     * Get all buttons
-     * @return array|null
-     */
-    public function buttons(): ?array
-    {
-        return $this->buttons;
-    }
 }

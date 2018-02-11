@@ -1,32 +1,49 @@
 <?php
 
-use Ffcms\Templex\Template;
+/** @var Ffcms\Templex\Template\Template $this */
 
-/** @var \Ffcms\Templex\Template $tpl */
-/** @var \Ffcms\Templex\Engine\Renderer $this */
+$this->layout('layout', ['title' => 'lol kek']);
 
-/** @var string $var */
+class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
+{
+    public $name;
+    public $gender = 0;
+    public $about;
+    public $pass = 'SecUrEPwD';
+    public $hobys = [1];
+    public $token = '05e73a0b7f06dd5674e026d534852279';
+    public $avatar;
 
-$this->title = "Main block";
-?>
-<!-- css block extend -->
-<?php $tpl->section('css', Template::SECTION_APPEND) ?>
-<style>
-    .someclass {
-        padding: 0;
+    public function labels(): array
+    {
+        return [
+            'name' => 'Your name',
+            'gender' => 'Your gender'
+        ];
     }
-</style>
-<?php $tpl->stop() ?>
 
-<!-- main section extend -->
-<?php $tpl->section('body') ?>
+    public function genders(): array
+    {
+        return [1 => 'male', 2 => 'female', 0 => 'none'];
+    }
+}
 
-<p>Variable $var="<?= $var ?>"</p>
+?>
+<?php $this->start('body') ?>
 
+<h1>Hello world</h1>
+<?php $this->insert('block/depend') ?>
+
+<?php echo $this->listing('ul', ['class' => 'my-listing'])
+    ->li([
+        ['text' => 'Text item'],
+        ['text' => 'Google link', 'link' => ['https://google.com']],
+        ['text' => 'Local link', 'link' => ['controller/action', ['id' => 1]], 'properties' => ['class' => 'li-item']]
+    ])
+    ->display(); ?>
 
 <p>~ Table example:</p>
-<!-- table example -->
-<?= $tpl->table(['class' => 'test-table', 'style' => 'border: 1px solid'])
+<?= $this->table(['class' => 'test-table', 'style' => 'border: 1px solid'])
     ->selectize(0, 'inputCol')
     ->sortable([0 => 'id', 1 => 'colmn1'])
     ->thead(['id' => 'test-head-id'], function(){
@@ -48,28 +65,48 @@ $this->title = "Main block";
 ?>
 
 <p>~ Listing example:</p>
+<?= $this->listing('ul', ['class' => 'nav'])
+    ->li([
+        ['text' => 'Item #1'],
+        ['text' => 'Item #2 with properties', 'properties' => ['class' => 'nav-text']],
+        ['text' => 'Link #1', 'link' => ['controller/action', ['id' => 1]], 'properties' => ['class' => 'nav-item']]
+    ])->display(); ?>
 
-<?= $tpl->listing('ul', ['class' => 'nav'])
-    ->li(['class' => 'nav'], function(){
-        $res = [];
-        for ($i = 1; $i<=10; $i++) {
-            if ($i % 2) {
-                $res[] = ['link' => ['controller/action', $i], 'text' => 'link: ' . $i, 'properties' => ['class' => 'nav-item']];
-            } else {
-                $res[] = ['text' => 'index: ' . $i, 'properties' => ['class' => 'nav-item']];
-            }
-        }
-        return $res;
-    })->display(); ?>
+<p>~ Pagination example (<10 pages):</p>
+<?= $this->pagination(['controller/action', ['id' => 'test']])
+    ->size(75, 0, 10)
+    ->display(); ?>
 
-<?php $tpl->stop() ?>
+<p>~ Pagination example (>10 pages):</p>
+<?= $this->pagination(['controller/action', ['id' => 'test']])
+    ->size(750, (int)$_GET['page'], 10)
+    ->display(); ?>
+
+<p>~ Form example:</p>
+
+<?php
+$model = new FakeForm();
+$form = $this->form($model);
+
+echo $form->start();
+
+echo $form->field()->text('name', ['class' => 'test-input'], 'Hey, what is your name?');
+echo $form->field()->textarea('about', null, 'Tell something about yourself');
+echo $form->field()->select('gender', ['options' => $model->genders(), 'optionsKey' => true], 'What is your gender?');
+echo $form->field()->password('pass', null, 'Enter your password');
+echo $form->field()->multiselect('hobys', ['options' => [1 => 'programmig', 2 => 'rock', 3 => 'pop'], 'optionsKey' => true]);
+echo $form->field()->file('avatar');
+
+echo $form->field()->hidden('token');
+
+echo $form->button()->submit('send me now ');
+
+echo $form->stop();
+?>
 
 
-<!-- javascript block extend -->
-<?php $tpl->section('javascript', Template::SECTION_APPEND) ?>
-<script>
-    $(document).ready(function(){
-        console.log('extend 1');
-    });
-</script>
-<?php $tpl->stop() ?>
+<?php $this->end(); ?>
+
+<?php $this->push('javascript') ?>
+<script>console.log('some javascript render');</script>
+<?php $this->end(); ?>

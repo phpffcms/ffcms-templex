@@ -59,10 +59,11 @@ class Form implements ExtensionInterface
     }
 
     /**
-     * Render output html form code
-     * @return string
+     * Start form - display open tag
+     * @param bool $csrf
+     * @return null|string
      */
-    public function html(): ?string
+    public function start(bool $csrf = true): ?string
     {
         // check if form name is defined
         if (!$this->properties['name']) {
@@ -75,12 +76,16 @@ class Form implements ExtensionInterface
             $this->properties['method'] = 'POST';
         }
 
-        // render tpl
-        return self::$engine->render('form/form', [
-            'fields' => $this->field->fields(),
-            'buttons' => $this->button->buttons(),
-            'properties' => $this->properties
-        ]);
+        return '<form' . Dom::applyProperties($this->properties) . '>';
+    }
+
+    /**
+     * Form stop - closing tag & javascript features
+     * @return string
+     */
+    public function stop(): string
+    {
+        return '</form>';
     }
 
     /**

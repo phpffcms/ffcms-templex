@@ -13,6 +13,8 @@ use Ffcms\Templex\Helper\Html\Form\Field\FieldInterface;
  * @method select(string $name, ?array $properties = null, ?string $helper = null)
  * @method password(string $name, ?array $properties = null, ?string $helper = null)
  * @method multiselect(string $name, ?array $properties = null, ?string $helper = null)
+ * @method hidden(string $name, ?array $properties = null)
+ * @method file(string $name, ?array $properties = null, ?string $helper = null)
  */
 class Field
 {
@@ -21,8 +23,6 @@ class Field
 
     /** @var Engine */
     private $engine;
-
-    private $fields = [];
 
     /**
      * Field constructor.
@@ -39,13 +39,13 @@ class Field
      * Some magic inside :)
      * @param string $type
      * @param array|null $arguments
-     * @return void
+     * @return string|null
      */
-    public function __call(string $type, ?array $arguments = null): void
+    public function __call(string $type, ?array $arguments = null): ?string
     {
         // arguments[0] = model field name
         if (!$arguments || !isset($arguments[0]) || !is_string($arguments[0])) {
-            return;
+            return null;
         }
 
         // get field name
@@ -54,29 +54,21 @@ class Field
         // initialize worker for field type
         $callback = 'Ffcms\Templex\Helper\Html\Form\Field\\' . ucfirst($type);
         if (!class_exists($callback)) {
-            return;
+            return null;
         }
         /** @var FieldInterface $field */
         $field = new $callback($this->model, $attr, $this->engine);
-        $this->fields[] = $field->html($arguments[1], $arguments[2]);
+        return $field->html($arguments[1], $arguments[2]);
     }
 
     /**
      * Manual any-way field made by your hands like $form->field()->manual(function(){return 'hello world';});
      * @param \Closure $callback
-     * @return void
+     * @return string|null
      */
-    public function manual(\Closure $callback): void
+    public function manual(\Closure $callback): ?string
     {
-        $this->fields[] = $callback();
+        return $callback();
     }
 
-    /**
-     * Get result fields array
-     * @return array
-     */
-    public function fields()
-    {
-        return $this->fields;
-    }
 }
