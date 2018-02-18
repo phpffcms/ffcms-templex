@@ -26,7 +26,9 @@ class Hidden extends StandardField
 
         $properties['type'] = 'hidden';
         $properties['name'] = $this->fieldNameWithForm;
-        $properties['value'] = htmlentities($this->value, ENT_QUOTES, 'UTF-8');
+        if (!isset($properties['value'])) {
+            $properties['value'] = htmlentities($this->value, ENT_QUOTES, 'UTF-8');
+        }
 
         if (!isset($properties['id'])) {
             $properties['id'] = $this->fieldNameWithForm;

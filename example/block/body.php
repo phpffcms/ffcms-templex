@@ -7,12 +7,16 @@ $this->layout('layout', ['title' => 'lol kek']);
 class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
 {
     public $name;
-    public $gender = 0;
+    public $gender = 0; // 0/1/2
     public $about;
     public $pass = 'SecUrEPwD';
     public $hobys = [1];
     public $token = '05e73a0b7f06dd5674e026d534852279';
     public $avatar;
+
+    public $jailed; // true/false
+
+    public $cities; // multiple checkboxes
 
     public function labels(): array
     {
@@ -96,6 +100,9 @@ echo $form->field()->select('gender', ['options' => $model->genders(), 'optionsK
 echo $form->field()->password('pass', null, 'Enter your password');
 echo $form->field()->multiselect('hobys', ['options' => [1 => 'programmig', 2 => 'rock', 3 => 'pop'], 'optionsKey' => true]);
 echo $form->field()->file('avatar');
+echo $form->field()->boolean('jailed');
+echo $form->field()->checkboxes('cities', ['options' => ['kv' => 'Kiev', 'ms' => 'Moscow', 'wg' => 'Washington'], 'optionsKey' => true]);
+echo $form->field()->checkboxes('cities', ['options' => ['Kiev', 'Moscow', 'Washington']]);
 
 echo $form->field()->hidden('token');
 

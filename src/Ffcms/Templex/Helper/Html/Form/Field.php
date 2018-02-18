@@ -15,6 +15,8 @@ use Ffcms\Templex\Helper\Html\Form\Field\FieldInterface;
  * @method multiselect(string $name, ?array $properties = null, ?string $helper = null)
  * @method hidden(string $name, ?array $properties = null)
  * @method file(string $name, ?array $properties = null, ?string $helper = null)
+ * @method boolean(string $name, ?array $properties = null, ?string $helper = null)
+ * @method checkboxes(string $name, ?array $properties = null, ?string $helper = null)
  */
 class Field
 {
@@ -23,6 +25,8 @@ class Field
 
     /** @var Engine */
     private $engine;
+
+    private $used;
 
     /**
      * Field constructor.
@@ -53,9 +57,12 @@ class Field
 
         // initialize worker for field type
         $callback = 'Ffcms\Templex\Helper\Html\Form\Field\\' . ucfirst($type);
-        if (!class_exists($callback)) {
+        if (!class_exists($callback) || isset($this->used[$attr])) {
             return null;
         }
+        // mark as used
+        $this->used[$attr] = true;
+
         /** @var FieldInterface $field */
         $field = new $callback($this->model, $attr, $this->engine);
         return $field->html($arguments[1], $arguments[2]);
