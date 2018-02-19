@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Table;
 
-
 use Ffcms\Templex\Helper\Html\Dom;
 
 class Tbody implements RenderElement
@@ -43,11 +42,11 @@ class Tbody implements RenderElement
     {
         $dom = new Dom();
 
-        return $dom->tbody(function() use ($dom) { // build <tbody></tbody> section
+        return $dom->tbody(function () use ($dom) { // build <tbody></tbody> section
             $tr = null;
             foreach ($this->items as $row) {
                 ksort($row); // sort columns in row
-                $tr .= $dom->tr(function() use ($dom, $row){ // build <tr></tr> section in <tbody>
+                $tr .= $dom->tr(function () use ($dom, $row) { // build <tr></tr> section in <tbody>
                     $td = null;
                     foreach ($row as $order => $column) {
                         // do not process empty rows
@@ -59,7 +58,7 @@ class Tbody implements RenderElement
                             continue;
                         }
 
-                        $td .= $dom->td(function() use ($order, $column) { // build <td><td> tags inside <tr> section
+                        $td .= $dom->td(function () use ($order, $column) { // build <td><td> tags inside <tr> section
                             $text = $column['text'];
                             $flag = ENT_QUOTES;
                             if (isset($column['flag'])) {
@@ -98,5 +97,4 @@ class Tbody implements RenderElement
         ]);
         return $checkbox . $text;
     }
-
 }

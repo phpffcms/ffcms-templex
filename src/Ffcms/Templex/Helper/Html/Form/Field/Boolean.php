@@ -4,7 +4,6 @@ namespace Ffcms\Templex\Helper\Html\Form\Field;
 
 use Ffcms\Templex\Helper\Html\Dom;
 
-
 /**
  * Class Checkbox.
  * @package Ffcms\Templex\Helper\Html\Form\Field
@@ -27,7 +26,8 @@ class Boolean extends StandardField
         }
 
         // build fake checkbox with value=0 and hidden type
-        $disabled = (new Dom())->input(function(){}, [
+        $disabled = (new Dom())->input(function () {
+        }, [
             'name' => $properties['name'],
             'value' => 0,
             'type' => 'hidden'

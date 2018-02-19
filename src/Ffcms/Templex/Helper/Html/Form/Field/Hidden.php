@@ -2,7 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
+use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Dom;
 
 /**
@@ -21,6 +21,7 @@ class Hidden extends StandardField
     public function html(?array $properties = null, ?string $helper = null): ?string
     {
         if (!$this->value || !is_string($this->value) || strlen($this->value) < 1) {
+            Error::add('Form field error: hidden field may not have empty value: ' . $this->fieldName, __FILE__);
             return null;
         }
 

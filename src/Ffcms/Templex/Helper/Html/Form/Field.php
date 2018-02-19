@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Form;
 
+use Ffcms\Templex\Exceptions\Error;
 use League\Plates\Engine;
 use Ffcms\Templex\Helper\Html\Form\Field\FieldInterface;
 
@@ -58,6 +59,7 @@ class Field
         // initialize worker for field type
         $callback = 'Ffcms\Templex\Helper\Html\Form\Field\\' . ucfirst($type);
         if (!class_exists($callback) || isset($this->used[$attr])) {
+            Error::add('Form field error: no type exist or field is alway used: ' . $attr . '[' . $type . ']', __FILE__);
             return null;
         }
         // mark as used
@@ -77,5 +79,4 @@ class Field
     {
         return $callback();
     }
-
 }

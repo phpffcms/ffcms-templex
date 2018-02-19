@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
 class Select extends StandardField
 {
 

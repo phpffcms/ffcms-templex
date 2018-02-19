@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
 /**
  * Class File. Input type=file implementation
  * @package Ffcms\Templex\Helper\Html\Form\Field

@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Table;
 
-
 /**
  * Interface RenderElement. Default block interface
  * @package Ffcms\Templex\Helper\Html\Table

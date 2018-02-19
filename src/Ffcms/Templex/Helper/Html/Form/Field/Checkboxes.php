@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+use Ffcms\Templex\Exceptions\Error;
 
 /**
  * Class Checkboxes. Multiple checkboxes implementation
@@ -21,6 +22,7 @@ class Checkboxes extends StandardField
         $options = $properties['options'];
         $properties['type'] = 'checkbox';
         if (!is_iterable($options)) { // check if options is passed
+            Error::add('Form field error: checkboxes options is emtpy for field: ' . $this->fieldName, __FILE__);
             return null;
         }
         $useKey = (bool)$properties['optionsKey'];

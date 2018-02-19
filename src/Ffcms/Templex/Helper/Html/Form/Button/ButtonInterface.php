@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Button;
 
-
 use League\Plates\Engine;
 
 interface ButtonInterface

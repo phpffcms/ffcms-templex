@@ -2,7 +2,10 @@
 
 namespace Ffcms\Templex\Url;
 
-
+/**
+ * Class Url. Build urls inside project
+ * @package Ffcms\Templex\Url
+ */
 class Url
 {
     /** @var UrlRepository */
@@ -61,11 +64,12 @@ class Url
      * @param string $controllerAction
      * @param array|null $arguments
      * @param array|null $query
+     * @return string
      */
-    public static function to(string $controllerAction, ?array $arguments = null, ?array $query = null)
+    public static function to(string $controllerAction, ?array $arguments = null, ?array $query = null): ?string
     {
-        // check if link is looks like anchor (starts with #)
-        if ($controllerAction[0] === '#') {
+        // check if link is looks like anchor (starts with #) or full url (contains protocol://)
+        if ($controllerAction[0] === '#' || strpos($controllerAction, '://') !== false) {
             return $controllerAction;
         }
 
@@ -105,5 +109,4 @@ class Url
 
         return $path;
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
 class Password extends StandardField
 {
 

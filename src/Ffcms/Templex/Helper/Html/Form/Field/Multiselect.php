@@ -2,6 +2,8 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+use Ffcms\Templex\Exceptions\Error;
+
 /**
  * Class Multiselect. Select * options with multiple array features
  * @package Ffcms\Templex\Helper\Html\Form\Field
@@ -18,7 +20,8 @@ class Multiselect extends StandardField
     public function html(?array $properties = null, ?string $helper = null): ?string
     {
         $options = $properties['options'];
-        if (!is_iterable($options)) {
+        if (!is_array($options)) {
+            Error::add('Form field error: multiselect should not have no options: ' . $this->fieldName, __FILE__);
             return null;
         }
         unset($properties['options']);

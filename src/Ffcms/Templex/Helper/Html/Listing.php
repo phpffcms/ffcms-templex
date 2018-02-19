@@ -2,7 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html;
 
-
+use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Listing\Li;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
@@ -37,7 +37,7 @@ class Listing implements ExtensionInterface
      * @param array|null $properties
      * @return Listing
      */
-    public static function factory(string $type, ?array $properties = null)
+    public static function factory(string $type, ?array $properties = null): Listing
     {
         $instance = new self();
         $instance->type = $type;
@@ -48,8 +48,9 @@ class Listing implements ExtensionInterface
     /**
      * Build <li><li> from items array
      * @param array|\Closure $items
+     * @return Listing
      */
-    public function li($items)
+    public function li($items): Listing
     {
         // make closure call
         if (is_callable($items)) {
@@ -57,7 +58,7 @@ class Listing implements ExtensionInterface
         }
 
         if (is_iterable($items)) {
-            $this->li = new Li($items, $this->type);
+            $this->li = new Li($items);
         }
 
         return $this;
@@ -69,8 +70,9 @@ class Listing implements ExtensionInterface
      */
     public function display(): ?string
     {
-        return (new Dom())->{$this->type}(function() {
+        return (new Dom())->{$this->type}(function () {
             if (!$this->li) {
+                Error::add('No items to display in listing', __FILE__);
                 return null;
             }
             return $this->li->html();

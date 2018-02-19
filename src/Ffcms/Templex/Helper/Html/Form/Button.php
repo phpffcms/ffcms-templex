@@ -2,7 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Form;
 
-
+use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Form\Button\ButtonInterface;
 use League\Plates\Engine;
 
@@ -41,11 +41,11 @@ class Button
 
         $callback = 'Ffcms\Templex\Helper\Html\Form\Button\\' . ucfirst($type);
         if (!class_exists($callback)) {
+            Error::add('Form button error: type ' . $type . ' not exist', __FILE__);
             return null;
         }
         /** @var ButtonInterface $class */
         $class = new $callback($this->engine);
         return $class->html($arguments[0], $arguments[1]);
     }
-
 }

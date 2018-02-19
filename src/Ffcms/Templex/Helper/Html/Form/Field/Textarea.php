@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
 /**
  * Class Textarea. Textarea field implementation
  * @package Ffcms\Templex\Helper\Html\Form\Field

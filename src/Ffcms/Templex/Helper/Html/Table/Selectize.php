@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Table;
 
-
 /**
  * Class Selectize. Selectize special features
  * @package Ffcms\Templex\Helper\Html\Table

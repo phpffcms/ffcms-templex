@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form;
 
-
 /**
  * Class Model. Abstract model for form building
  * @package Ffcms\Templex\Helper\Html\Form
@@ -12,10 +11,15 @@ abstract class Model implements ModelInterface
     public $_csrf_token;
     public $_name;
 
+    /**
+     * Model constructor.
+     */
     public function __construct()
     {
         $cname = get_class($this);
-        $this->_name = substr($cname, strrpos($cname, '\\'));
+        if (!$this->_name) {
+            $this->_name = substr($cname, strrpos($cname, '\\'));
+        }
     }
 
     /**

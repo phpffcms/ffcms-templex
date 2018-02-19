@@ -9,7 +9,6 @@ use Ffcms\Templex\Helper\Html\Pagination;
 use Ffcms\Templex\Helper\Html\Table;
 use Ffcms\Templex\Template\Template;
 
-
 /**
  * Class Template. Template engine loader entry point.
  * @package Ffcms\Templex

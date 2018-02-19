@@ -2,7 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html;
 
-
+use Ffcms\Templex\Exceptions\Error;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 
@@ -24,6 +24,7 @@ class Pagination implements ExtensionInterface
     private $step;
     private $pages;
 
+    /** @var Listing|null */
     private $listing;
 
     /**
@@ -42,6 +43,7 @@ class Pagination implements ExtensionInterface
      * @param array|null $properties
      * @param array|null $liProperties
      * @param array|null $aProperties
+     * @return Pagination
      */
     public static function factory(array $url, ?array $properties = null, ?array $liProperties = null, ?array $aProperties = null): Pagination
     {
@@ -59,6 +61,7 @@ class Pagination implements ExtensionInterface
      * @param int $count
      * @param int $page
      * @param int $step
+     * @return Pagination
      */
     public function size(int $count, int $page = 0, int $step = 10): Pagination
     {
@@ -83,6 +86,7 @@ class Pagination implements ExtensionInterface
     {
         // current page >= total page count or total page count lower then 1
         if ($this->page >= $this->pages || $this->pages <= 1) {
+            Error::add('Wrong page disposition. Current: ' . $this->page . ', total: ' . $this->pages, __FILE__);
             return;
         }
 
@@ -132,6 +136,7 @@ class Pagination implements ExtensionInterface
     private function generateListing(int $start, int $end): ?array
     {
         if ($end < $start) {
+            Error::add('End position seems > then start', __FILE__);
             return null;
         }
 
@@ -185,5 +190,4 @@ class Pagination implements ExtensionInterface
     {
         return $this->display();
     }
-
 }

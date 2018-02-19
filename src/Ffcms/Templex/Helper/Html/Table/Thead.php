@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Table;
 
-
 use Ffcms\Templex\Helper\Html\Dom;
 
 class Thead implements RenderElement
@@ -56,11 +55,11 @@ class Thead implements RenderElement
     public function html(): ?string
     {
         $dom = new Dom();
-        return $dom->thead(function() use ($dom) { // make <thead></thead> section
-            return $dom->tr(function() use ($dom){ // make <tr></tr> section inside <thead>
+        return $dom->thead(function () use ($dom) { // make <thead></thead> section
+            return $dom->tr(function () use ($dom) { // make <tr></tr> section inside <thead>
                 $tr = null;
                 foreach ($this->items as $order => $item) {
-                    $tr .= $dom->th(function() use ($dom, $item, $order) { // make <th></th> items inside <tr> section
+                    $tr .= $dom->th(function () use ($dom, $item, $order) { // make <th></th> items inside <tr> section
                         // parse th text from passed item array value
                         $text = (string)$item['text'];
                         if (!$item['html']) {

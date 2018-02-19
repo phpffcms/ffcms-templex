@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form;
 
-
 interface ModelInterface
 {
     /**
@@ -23,5 +22,4 @@ interface ModelInterface
      * @return string
      */
     public function getFormName(): string;
-
 }

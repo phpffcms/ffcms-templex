@@ -2,13 +2,13 @@
 
 namespace Ffcms\Templex\Helper\Html;
 
+use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Table\Selectize;
 use Ffcms\Templex\Helper\Html\Table\Sorter;
 use Ffcms\Templex\Helper\Html\Table\Tbody;
 use Ffcms\Templex\Helper\Html\Table\Thead;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
-
 
 /**
  * Class Table. HTML table code builder
@@ -34,7 +34,7 @@ class Table implements ExtensionInterface
      * @param array|null $p
      * @return Table
      */
-    public static function factory(array $p = null)
+    public static function factory(array $p = null): Table
     {
         $instance = new self();
         $instance->tableProperties = $p;
@@ -105,8 +105,9 @@ class Table implements ExtensionInterface
 
     /**
      * Add selectable checkbox for $order with input name $name
-     * @param string $order
+     * @param int $order
      * @param string $name
+     * @return Table
      */
     public function selectize(int $order, string $name): Table
     {
@@ -116,7 +117,7 @@ class Table implements ExtensionInterface
 
     /**
      * Initialize sorter
-     * @param array $columnNumbers
+     * @param array $columns
      * @param string|null $currentUrl
      * @return Table
      */
@@ -134,10 +135,11 @@ class Table implements ExtensionInterface
     {
         // check if tbody is used
         if (!$this->tbody) {
+            Error::add('Table failed: no tbody items exist', __FILE__);
             return null;
         }
 
-        $table = (new Dom())->table(function() {
+        $table = (new Dom())->table(function () {
             $thead = $this->thead;
             if ($thead) {
                 $thead = $thead->html();

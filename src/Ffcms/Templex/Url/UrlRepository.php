@@ -28,11 +28,9 @@ class UrlRepository
 
     /**
      * Entry point like singleton state holder.
-     * @param string|null $url
-     * @param string|null $subdir
      * @return UrlRepository
      */
-    public static function factory()
+    public static function factory(): UrlRepository
     {
         if (!self::$instance) {
             self::$instance = new self();

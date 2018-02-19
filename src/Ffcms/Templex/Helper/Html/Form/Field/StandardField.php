@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
 use Ffcms\Templex\Engine;
 use Ffcms\Templex\Helper\Html\Form\ModelInterface;
 
@@ -74,5 +73,4 @@ abstract class StandardField implements FieldInterface
         $this->fieldNameWithForm = $this->model->getFormName() . '-' . $this->attrName;
         $this->value = $value;
     }
-
 }

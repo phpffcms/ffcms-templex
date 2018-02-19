@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html;
 
-
 use Ffcms\Templex\Helper\Html\Form\Button;
 use Ffcms\Templex\Helper\Html\Form\Button\Submit;
 use Ffcms\Templex\Helper\Html\Form\Field;
@@ -105,5 +104,4 @@ class Form implements ExtensionInterface
     {
         return $this->button;
     }
-
 }

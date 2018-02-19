@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Table;
 
-
 use Ffcms\Templex\Helper\Html\Dom;
 use Ffcms\Templex\Helper\Html\Table;
 
@@ -57,7 +56,7 @@ class Sorter implements RenderElement
         if ($queryValue === SORT_ASC) {
             $ascLink = "&uarr;";
         } else {
-            $ascLink = (new Dom())->a(function(){
+            $ascLink = (new Dom())->a(function () {
                 return "&uarr;";
             }, ['href' => $this->url . '?' . http_build_query(array_merge($_GET, [$queryString => static::SORT_ASC]))]);
         }
@@ -66,7 +65,7 @@ class Sorter implements RenderElement
         if ($queryValue === SORT_DESC) {
             $descLink = "&darr;";
         } else {
-            $descLink = (new Dom())->a(function(){
+            $descLink = (new Dom())->a(function () {
                 return "&darr;";
             }, ['href' => $this->url . '?' . http_build_query(array_merge($_GET, [$queryString => static::SORT_DESC]))]);
         }

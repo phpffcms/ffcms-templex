@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
 /**
  * Class Text. Text input field implementation
  * @package Ffcms\Templex\Helper\Form\Field

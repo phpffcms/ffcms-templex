@@ -62,14 +62,14 @@ class Li
         $url = Url::to($item['link'][0], $item['link'][1], $item['link'][2]);
 
         // return element
-        return (new Dom())->li(function() use ($item, $url){ // <li><li> container
+        return (new Dom())->li(function () use ($item, $url) { // <li><li> container
             $ahrefProperties = array_merge(['href' => $url, (array)$item['linkProperties']]);
             // check if link seems like current and mark "active"
             if (is_array($item['link']) && $this->isCurrentUrl($item['link'], (bool)$item['urlEqual'])) {
                 $ahrefProperties = array_merge($ahrefProperties, $item['active']);
             }
 
-            return (new Dom())->a(function() use ($item, $url){ // <a href="">{val}</a> container inside <li>
+            return (new Dom())->a(function () use ($item, $url) { // <a href="">{val}</a> container inside <li>
                 $text = $item['text'];
                 if (!$item['html']) {
                     $text = htmlentities($text, null, 'UTF-8');
@@ -100,7 +100,7 @@ class Li
     private function buildTextItem(array $item)
     {
         // build text item dom element
-        return (new Dom())->li(function() use ($item){
+        return (new Dom())->li(function () use ($item) {
             $text = $item['text'];
             if (!$item['html']) {
                 $text = htmlspecialchars($text, null, 'UTF-8');

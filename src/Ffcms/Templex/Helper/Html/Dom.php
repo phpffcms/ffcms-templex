@@ -3,7 +3,6 @@
 
 namespace Ffcms\Templex\Helper\Html;
 
-
 /**
  * Class Dom. Build html DOM structures based on anonymous callbacks
  * @package Ffcms\Core\Helper\HTML
