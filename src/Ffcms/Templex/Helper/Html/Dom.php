@@ -57,6 +57,14 @@ class Dom
         'button'
     ];
 
+    // allowed tag attributes
+    public static $attributes = [
+        'class', 'id', 'style', 'border',
+        'href', 'src', 'link',
+        'rel', 'title', 'alt',
+        'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name'
+    ];
+
     // private variables storage
     private $_vars = [];
 
@@ -119,9 +127,10 @@ class Dom
         // build output string
         $build = null;
         foreach ($properties as $property => $value) {
-            if (!is_string($property)) {
+            if (!is_string($property) || !in_array($property, static::$attributes)) {
                 continue;
             }
+
             // sounds like single standalone property, ex required, selected etc
             if ($value === null || $value === false) {
                 $build .= ' ' . htmlentities($property, ENT_QUOTES, "UTF-8");

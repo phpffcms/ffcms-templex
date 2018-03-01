@@ -16,7 +16,7 @@ class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
 
     public $jailed; // true/false
 
-    public $cities; // multiple checkboxes
+    public $cities = ['kv', 'ms']; // multiple checkboxes
 
     public function labels(): array
     {
@@ -39,11 +39,9 @@ class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
 <?php $this->insert('block/depend') ?>
 
 <?php echo $this->listing('ul', ['class' => 'my-listing'])
-    ->li([
-        ['text' => 'Text item'],
-        ['text' => 'Google link', 'link' => ['https://google.com']],
-        ['text' => 'Local link', 'link' => ['controller/action', ['id' => 1]], 'properties' => ['class' => 'li-item']]
-    ])
+    ->li('Text item')
+    ->li(['text' => 'Google link', 'link' => ['https://google.com']])
+    ->li(['text' => 'Local link', 'link' => ['controller/action', ['id' => 1]], ['class' => 'li-item']])
     ->display(); ?>
 
 <p>~ Table example:</p>
@@ -70,11 +68,10 @@ class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
 
 <p>~ Listing example:</p>
 <?= $this->listing('ul', ['class' => 'nav'])
-    ->li([
-        ['text' => 'Item #1'],
-        ['text' => 'Item #2 with properties', 'properties' => ['class' => 'nav-text']],
-        ['text' => 'Link #1', 'link' => ['controller/action', ['id' => 1]], 'properties' => ['class' => 'nav-item']]
-    ])->display(); ?>
+    ->li('Item #1')
+    ->li('Item #2 with properties', ['class' => 'nav-text'])
+    ->li(['text' => 'Link #1', 'link' => ['controller/action', ['id' => 1]]], ['class' => 'nav-link'])
+    ->display(); ?>
 
 <p>~ Pagination example (<10 pages):</p>
 <?= $this->pagination(['controller/action', ['id' => 'test']])
@@ -102,7 +99,6 @@ echo $form->field()->multiselect('hobys', ['options' => [1 => 'programmig', 2 =>
 echo $form->field()->file('avatar');
 echo $form->field()->boolean('jailed');
 echo $form->field()->checkboxes('cities', ['options' => ['kv' => 'Kiev', 'ms' => 'Moscow', 'wg' => 'Washington'], 'optionsKey' => true]);
-echo $form->field()->checkboxes('cities', ['options' => ['Kiev', 'Moscow', 'Washington']]);
 
 echo $form->field()->hidden('token');
 
@@ -110,6 +106,17 @@ echo $form->button()->submit('send me now ');
 
 echo $form->stop();
 ?>
+
+<!-- nav example -->
+<?= $this->bootstrap()->nav('ul', ['class' => 'nav-tabs'])
+    ->menu(['text' => 'Menu #1', 'link' => ['action/test']], ['class' => 'nav-item'])
+    ->menu(['text' => 'Menu #2', 'link' => ['action/tesk2']])
+    ->menu(['text' => 'Tab 1', 'tab' => 'Lol kek tabcontent'])
+    ->menu(['text' => 'Tab 2', 'tab' => function(){
+        return '<div>Some strong content body in anonymous function</div>';
+    }])->display() ?>
+
+<?= $this->bootstrap()->alert('primary', 'Test alert message') ?>
 
 
 <?php $this->end(); ?>

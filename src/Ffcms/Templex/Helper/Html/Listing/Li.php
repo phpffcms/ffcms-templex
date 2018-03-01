@@ -11,73 +11,73 @@ use Ffcms\Templex\Url\Url;
  */
 class Li
 {
-    private $items;
+    private $context;
+    private $properties;
+
+    private $html;
 
     /**
-     * Li constructor.
-     * @param array $items
+     * Li constructor. Initialize container
+     * @param $context
+     * @param array|null $properties
      */
-    public function __construct(array $items)
+    public function __construct($context, ?array $properties = null)
     {
-        $this->items = $items;
+        $this->context = $context;
+        $this->properties = $properties;
+        $this->make();
     }
 
     /**
-     * Build output html
-     * @return null|string
+     * Build result html
      */
-    public function html(): ?string
+    private function make(): void
     {
-        $dom = new Dom();
-
-        $html = null;
-        foreach ($this->items as $item) {
-            // do not process bulls@its
-            if (!is_array($item)) {
-                continue;
+        if (is_array($this->context)) {
+            if (isset($this->context['link']) && isset($this->context['text'])) { // link item
+                $this->html = $this->buildLinkItem();
+            } elseif (isset($this->context['text']) && isset($this->context['tab'])) { // tab content item
+                $this->html = null; // @todo!!!
             }
-
-            if (isset($item['link'])) {
-                $html .= $this->buildLinkItem($item);
-            } else {
-                $html .= $this->buildTextItem($item);
-            }
+        } else {
+            $this->html = $this->buildTextItem();
         }
-
-        return $html;
     }
 
     /**
      * Build html "a href" link with checking if current url equals to
-     * @param array $item
+     * @return string|null
      */
-    private function buildLinkItem(array $item): ?string
+    private function buildLinkItem(): ?string
     {
         // check if active class defined by input or set as default
-        if (!isset($item['active']['class'])) {
-            $item['active']['class'] = 'active';
+        if (!isset($thix->context['active']['class'])) {
+            $this->context['active']['class'] = 'active';
         }
 
         // 0 = controller/action, 1 = [argument array], 2 = [get query array]
-        $url = Url::to($item['link'][0], $item['link'][1], $item['link'][2]);
+        $url = Url::to($this->context['link'][0], $this->context['link'][1], $this->context['link'][2]);
 
         // return element
-        return (new Dom())->li(function () use ($item, $url) { // <li><li> container
-            $ahrefProperties = array_merge(['href' => $url, (array)$item['linkProperties']]);
+        return (new Dom())->li(function () use ($url) { // <li><li> container
+            $ahrefProperties = array_merge(['href' => $url], (array)$this->context['linkProperties']);
             // check if link seems like current and mark "active"
-            if (is_array($item['link']) && $this->isCurrentUrl($item['link'], (bool)$item['urlEqual'])) {
-                $ahrefProperties = array_merge($ahrefProperties, $item['active']);
+            if (is_array($this->context['link']) && $this->isCurrentUrl($this->context['link'], (bool)$this->context['urlEqual'])) {
+                $ahrefProperties['class'] .= ' ' . $this->context['active']['class'];
             }
 
-            return (new Dom())->a(function () use ($item, $url) { // <a href="">{val}</a> container inside <li>
-                $text = $item['text'];
-                if (!$item['html']) {
+            return (new Dom())->a(function () use ($url) { // <a href="">{val}</a> container inside <li>
+                $text = $this->context['text'];
+                if (is_callable($text)) {
+                    $text = $text();
+                }
+                if (!$this->context['html']) {
                     $text = htmlentities($text, null, 'UTF-8');
                 }
 
                 return $text;
             }, $ahrefProperties);
-        }, $item['properties']);
+        }, $this->properties);
     }
 
     /**
@@ -94,19 +94,36 @@ class Li
 
     /**
      * Build text item
-     * @param array $item
      * @return string
      */
-    private function buildTextItem(array $item)
+    private function buildTextItem()
     {
         // build text item dom element
-        return (new Dom())->li(function () use ($item) {
-            $text = $item['text'];
-            if (!$item['html']) {
+        return (new Dom())->li(function () {
+            $text = $this->context;
+            if (!$this->properties['html']) {
                 $text = htmlspecialchars($text, null, 'UTF-8');
             }
 
             return $text;
-        }, $item['properties']);
+        }, $this->properties);
+    }
+
+    /**
+     * Return compiled html code
+     * @return null|string
+     */
+    public function html(): ?string
+    {
+        return $this->html;
+    }
+
+    /**
+     * Magic __toString call
+     * @return null|string
+     */
+    public function __toString(): ?string
+    {
+        return $this->html();
     }
 }

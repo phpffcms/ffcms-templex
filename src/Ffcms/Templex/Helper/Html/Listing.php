@@ -13,13 +13,13 @@ use League\Plates\Extension\ExtensionInterface;
  */
 class Listing implements ExtensionInterface
 {
-    private $engine;
+    protected $engine;
 
-    private $type;
-    private $properties;
+    protected $type;
+    protected $properties;
 
-    /** @var Li */
-    private $li;
+    /** @var Li[]|null */
+    protected $li;
 
     /**
      * Register extension in plates.
@@ -35,9 +35,9 @@ class Listing implements ExtensionInterface
      * Build listing instance
      * @param string $type
      * @param array|null $properties
-     * @return Listing
+     * @return self
      */
-    public static function factory(string $type, ?array $properties = null): Listing
+    public static function factory(string $type, ?array $properties = null)
     {
         $instance = new self();
         $instance->type = $type;
@@ -46,21 +46,17 @@ class Listing implements ExtensionInterface
     }
 
     /**
-     * Build <li><li> from items array
-     * @param array|\Closure $items
+     * @param array|string $context
+     * @param array|null $properties
      * @return Listing
      */
-    public function li($items): Listing
+    public function li($context, ?array $properties = null): self
     {
-        // make closure call
-        if (is_callable($items)) {
-            $items = $items();
+        if (is_callable($context)) {
+            $context = $context();
         }
 
-        if (is_iterable($items)) {
-            $this->li = new Li($items);
-        }
-
+        $this->li[] = new Li($context, $properties);
         return $this;
     }
 
@@ -75,7 +71,11 @@ class Listing implements ExtensionInterface
                 Error::add('No items to display in listing', __FILE__);
                 return null;
             }
-            return $this->li->html();
+            $html = null;
+            foreach ($this->li as $li) {
+                $html .= $li->html();
+            }
+            return $html;
         }, $this->properties);
     }
 

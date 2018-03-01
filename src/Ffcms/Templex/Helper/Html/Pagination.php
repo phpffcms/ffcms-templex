@@ -90,7 +90,9 @@ class Pagination implements ExtensionInterface
             return;
         }
 
-        $items = [];
+        // initialize listing class
+        $this->listing = Listing::factory('ul', $this->properties);
+
         // check if total pages count more then 10 or use simple algo
         if ($this->pages > 10) {
             $centerFrom = $this->page-2;
@@ -103,70 +105,53 @@ class Pagination implements ExtensionInterface
                 $centerTo = $this->pages;
             }
 
-            $items = $this->generateListing(0, ($centerFrom > 3 ? 3 : ($centerFrom-1))); // 0,1,2,3
-            if ($items) {
-                $items = array_merge($items, $this->generateSpeacer());
+            // check if in start/end position caret and generate center of list
+            if ($centerTo <= 4 || $centerFrom >= $this->pages-4) {
+                $center = (int)($this->pages / 2);
+                $centerFrom = $center - 2;
+                $centerTo = $center + 2;
             }
 
+            $this->generateListing(0, ($centerFrom > 3 ? 3 : ($centerFrom-1))); // 0,1,2,3
             // ... center-2,center-1,center,center+1,center+2 ...
-            $items = array_merge((array)$items, $this->generateListing($centerFrom, $centerTo));
+            $this->generateListing($centerFrom, $centerTo);
             // n-3,n-2,n-1,n
-            $last = $this->generateListing(($this->pages - $centerTo > 3 ? $this->pages-3 : $centerTo+1), $this->pages);
-
-            // @todo: calculate where $centerTo is finishing (>last-3 or not and process this shit!)
-            if ($last) {
-                $items = array_merge($items, $this->generateSpeacer());
-                $items = array_merge($items, $last);
-            }
+            $this->generateListing(($this->pages - $centerTo > 3 ? $this->pages-3 : $centerTo+1), $this->pages);
         } else {
-            $items = $this->generateListing(0, $this->pages);
+            $this->generateListing(0, $this->pages);
         }
-
-        // initialize listing
-        $this->listing = Listing::factory('ul', $this->properties)
-            ->li($items);
     }
 
     /**
      * Generate listing array from $start page to $end
      * @param int $start
      * @param int $end
-     * @return array|null
+     * @return bool
      */
-    private function generateListing(int $start, int $end): ?array
+    private function generateListing(int $start, int $end): bool
     {
-        if ($end < $start) {
+        if ($end < $start || !$this->listing) {
             Error::add('End position seems > then start', __FILE__);
-            return null;
+            return false;
         }
 
-        $result = [];
+        $result = false;
         foreach (range($start, $end) as $page) {
             $url = $this->url;
             if ($page > 0) {
                 $url[2]['page'] = $page;
             }
 
-            $result[] = [
+            $this->listing->li([
+                'text' => $page + 1,
                 'link' => $url,
-                'text' => $page+1,
-                'properties' => $this->liProperties,
                 'linkProperties' => $this->aProperties,
                 'urlEqual' => true
-            ];
+            ], $this->liProperties);
+            $result = true;
         }
 
         return $result;
-    }
-
-    /**
-     * @return array
-     */
-    private function generateSpeacer(): array
-    {
-        return [
-            ['link' => ['#'], 'text' => '...']
-        ];
     }
 
     /**
