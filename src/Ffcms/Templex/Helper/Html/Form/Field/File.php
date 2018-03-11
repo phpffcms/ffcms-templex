@@ -2,8 +2,11 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+
+use Ffcms\Templex\Helper\Html\Dom;
+
 /**
- * Class File. Input type=file implementation
+ * Class File. Build file field html
  * @package Ffcms\Templex\Helper\Html\Form\Field
  */
 class File extends StandardField
@@ -12,10 +15,9 @@ class File extends StandardField
     /**
      * Build output html
      * @param array|null $properties
-     * @param string|null $helper
      * @return null|string
      */
-    public function html(?array $properties = null, ?string $helper = null): ?string
+    public function html(?array $properties = null): ?string
     {
         $properties['type'] = 'file';
         $properties['name'] = $this->fieldNameWithForm;
@@ -24,10 +26,6 @@ class File extends StandardField
             $properties['id'] = $this->fieldNameWithForm;
         }
 
-        return $this->engine->render('form/field/file', [
-            'properties' => $properties,
-            'label' => $this->model->getLabel($this->fieldName),
-            'helper' => $helper
-        ]);
+        return (new Dom())->input($properties);
     }
 }

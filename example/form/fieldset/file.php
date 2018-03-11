@@ -6,17 +6,20 @@
 /** @var string $label */
 /** @var array $properties */
 /** @var string|null $helper */
+/** @var array|null $labelProperties */
+/** @var \Ffcms\Templex\Helper\Html\Form\Field\File $field */
 
-$labelProperties = array_merge((array)$labelProperties, ['class' => 'col-md-3']);
+if (!isset($labelProperties['class'])) {
+    $labelProperties['class'] = 'col-md-3 control-label';
+}
+$labelProperties['for'] = $field->getUniqueNameId();
 ?>
 <div class="form-group row">
     <?= (new \Ffcms\Templex\Helper\Html\Dom())->label(function() use ($label) {
         return $label;
-    }, ['for' => $properties['id']]) ?>
+    }, $labelProperties) ?>
     <div class="col-md-9">
-        <?= (new \Ffcms\Templex\Helper\Html\Dom())->input(function(){
-            return null;
-        }, $properties) ?>
+        <?= $field->html($properties) ?>
         <?php if ($helper): ?>
             <p class="form-text"><?= $helper ?></p>
         <?php endif; ?>

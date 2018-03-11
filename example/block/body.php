@@ -34,7 +34,6 @@ class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
 
 ?>
 <?php $this->start('body') ?>
-
 <h1>Hello world</h1>
 <?php $this->insert('block/depend') ?>
 
@@ -91,14 +90,14 @@ $form = $this->form($model);
 
 echo $form->start();
 
-echo $form->field()->text('name', ['class' => 'test-input'], 'Hey, what is your name?');
-echo $form->field()->textarea('about', null, 'Tell something about yourself');
-echo $form->field()->select('gender', ['options' => $model->genders(), 'optionsKey' => true], 'What is your gender?');
-echo $form->field()->password('pass', null, 'Enter your password');
-echo $form->field()->multiselect('hobys', ['options' => [1 => 'programmig', 2 => 'rock', 3 => 'pop'], 'optionsKey' => true]);
-echo $form->field()->file('avatar');
-echo $form->field()->boolean('jailed');
-echo $form->field()->checkboxes('cities', ['options' => ['kv' => 'Kiev', 'ms' => 'Moscow', 'wg' => 'Washington'], 'optionsKey' => true]);
+echo $form->fieldset()->text('name', null, 'Hey, what is your name?');
+echo $form->fieldset()->textarea('about', null, 'Tell something about yourself');
+echo $form->fieldset()->select('gender', ['options' => $model->genders(), 'optionsKey' => true], 'What is your gender?');
+echo $form->fieldset()->password('pass', null, 'Enter your password');
+echo $form->fieldset()->multiselect('hobys', ['options' => [1 => 'programmig', 2 => 'rock', 3 => 'pop'], 'optionsKey' => true]);
+echo $form->fieldset()->file('avatar');
+echo $form->fieldset()->boolean('jailed');
+echo $form->fieldset()->checkboxes('cities', ['options' => ['kv' => 'Kiev', 'ms' => 'Moscow', 'wg' => 'Washington'], 'optionsKey' => true]);
 
 echo $form->field()->hidden('token');
 

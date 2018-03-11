@@ -2,18 +2,17 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-use Ffcms\Templex\Engine;
 use Ffcms\Templex\Helper\Html\Form\ModelInterface;
 
+
 /**
- * Class StandardField.
- * @package Ffcms\Templex\Helper\Form\Field
+ * Class StandardField. Standard field implementation
+ * @package Ffcms\Templex\Helper\Html\Form\Field
  */
 abstract class StandardField implements FieldInterface
 {
     protected $model;
     protected $fieldName;
-    protected $engine;
 
     protected $value;
 
@@ -21,25 +20,23 @@ abstract class StandardField implements FieldInterface
     protected $fieldNameWithForm;
 
     /**
-     * DefaultField constructor.
+     * StandardField constructor.
      * @param ModelInterface $model
      * @param string $fieldName
-     * @param Engine $engine
      */
-    public function __construct(ModelInterface $model, string $fieldName, Engine $engine)
+    public function __construct(ModelInterface $model, string $fieldName)
     {
         $this->model = $model;
         $this->fieldName = $fieldName;
-        $this->engine = $engine;
 
-        // make default post-processing
-        $this->processDefault();
+        $this->processInit();
     }
 
     /**
-     * Process attribute/param naming logic and get value from model
+     * Set default conditions and names
+     * @return void
      */
-    private function processDefault()
+    private function processInit(): void
     {
         $full = $this->fieldName;
         $attr = $full;
@@ -72,5 +69,14 @@ abstract class StandardField implements FieldInterface
         $this->attrName = $attr;
         $this->fieldNameWithForm = $this->model->getFormName() . '-' . $this->attrName;
         $this->value = $value;
+    }
+
+    /**
+     * Get field id="" or name="" valid attribute value
+     * @return string|null
+     */
+    public function getUniqueNameId()
+    {
+        return $this->fieldNameWithForm;
     }
 }

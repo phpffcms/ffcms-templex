@@ -2,11 +2,12 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+
 use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Dom;
 
 /**
- * Class Hidden. Display input[type=hidden] field inline
+ * Class Hidden. Build input type=hidden element
  * @package Ffcms\Templex\Helper\Html\Form\Field
  */
 class Hidden extends StandardField
@@ -15,16 +16,17 @@ class Hidden extends StandardField
     /**
      * Build output html
      * @param array|null $properties
-     * @param string|null $helper
      * @return null|string
      */
-    public function html(?array $properties = null, ?string $helper = null): ?string
+    public function html(?array $properties = null): ?string
     {
+        // check if input type=hidden value is defined
         if (!$this->value || !is_string($this->value) || strlen($this->value) < 1) {
             Error::add('Form field error: hidden field may not have empty value: ' . $this->fieldName, __FILE__);
             return null;
         }
 
+        // set tag attributes
         $properties['type'] = 'hidden';
         $properties['name'] = $this->fieldNameWithForm;
         if (!isset($properties['value'])) {
@@ -35,8 +37,7 @@ class Hidden extends StandardField
             $properties['id'] = $this->fieldNameWithForm;
         }
 
-        return (new Dom())->input(function () {
-            return null;
-        }, $properties);
+        // render output dom html
+        return (new Dom())->input($properties);
     }
 }

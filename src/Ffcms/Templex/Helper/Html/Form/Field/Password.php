@@ -2,16 +2,22 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+use Ffcms\Templex\Helper\Html\Dom;
+
+
+/**
+ * Class Password
+ * @package Ffcms\Templex\Helper\Html\Form\Field
+ */
 class Password extends StandardField
 {
 
     /**
      * Build output html
      * @param array|null $properties
-     * @param string|null $helper
      * @return null|string
      */
-    public function html(?array $properties = null, ?string $helper = null): ?string
+    public function html(?array $properties = null): ?string
     {
         $properties['type'] = 'password';
         $properties['name'] = $this->fieldNameWithForm;
@@ -20,10 +26,6 @@ class Password extends StandardField
             $properties['id'] = $this->fieldNameWithForm;
         }
 
-        return $this->engine->render('form/field/password', [
-            'properties' => $properties,
-            'label' => $this->model->getLabel($this->fieldName),
-            'helper' => $helper
-        ]);
+        return (new Dom())->input($properties);
     }
 }

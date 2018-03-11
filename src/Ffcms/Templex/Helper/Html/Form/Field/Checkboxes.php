@@ -2,10 +2,12 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+
 use Ffcms\Templex\Exceptions\Error;
+use Ffcms\Templex\Helper\Html\Dom;
 
 /**
- * Class Checkboxes. Multiple checkboxes implementation
+ * Class Checkboxes. Build checkboxes html
  * @package Ffcms\Templex\Helper\Html\Form\Field
  */
 class Checkboxes extends StandardField
@@ -14,14 +16,13 @@ class Checkboxes extends StandardField
     /**
      * Build output html
      * @param array|null $properties
-     * @param string|null $helper
      * @return null|string
      */
-    public function html(?array $properties = null, ?string $helper = null): ?string
+    public function html(?array $properties = null): ?string
     {
         $options = $properties['options'];
         $properties['type'] = 'checkbox';
-        if (!is_iterable($options)) { // check if options is passed
+        if (!is_array($options)) { // check if options is passed
             Error::add('Form field error: checkboxes options is emtpy for field: ' . $this->fieldName, __FILE__);
             return null;
         }
@@ -34,14 +35,37 @@ class Checkboxes extends StandardField
 
         $properties['name'] .= '[]';
 
-        return $this->engine->render('form/field/checkboxes', [
-            'value' => $this->value,
-            'properties' => $properties,
-            'usekey' => $useKey,
-            'options' => $options,
-            'label' => $this->model->getLabel($this->fieldName),
-            'helper' => $helper,
-            'fieldname' => $this->fieldNameWithForm,
-        ]);
+        $html = null;
+        foreach ($options as $idx => $option) {
+            $properties['value'] = ($useKey ? $idx : $option);
+
+            if (is_array($this->value) && in_array($properties['value'], $this->value)) {
+                $properties['checked'] = null;
+            } else {
+                unset($properties['checked']);
+            }
+            $properties['id'] = $this->fieldNameWithForm . '-' . $idx;
+            $arrayProperties = $properties['arrayLabelProperties'] ?? null;
+            $arrayProperties['for'] = $this->fieldNameWithForm . '-' . $idx;
+
+            $html .= (new Dom())->input($properties); // input type=checkbox
+            $html .= (new Dom())->label(function () use ($option){
+                return htmlentities($option, null, 'UTF-8');
+            }, $arrayProperties);
+            $html .= PHP_EOL;
+        }
+
+        return $html;
+    }
+
+    /**
+     * Get label input as array
+     * @param array|null $properties
+     * @return array|null
+     */
+    public function asArray(?array $properties = null): ?array
+    {
+        $html = $this->html($properties);
+        return explode(PHP_EOL, $html);
     }
 }

@@ -2,10 +2,11 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+
 use Ffcms\Templex\Helper\Html\Dom;
 
 /**
- * Class Checkbox.
+ * Class Boolean. Prepare boolean checkbox yes/no with 1/0 values
  * @package Ffcms\Templex\Helper\Html\Form\Field
  */
 class Boolean extends StandardField
@@ -14,10 +15,9 @@ class Boolean extends StandardField
     /**
      * Build output html
      * @param array|null $properties
-     * @param string|null $helper
      * @return null|string
      */
-    public function html(?array $properties = null, ?string $helper = null): ?string
+    public function html(?array $properties = null): ?string
     {
         $properties['name'] = $this->fieldNameWithForm;
         $properties['type'] = 'checkbox';
@@ -38,13 +38,9 @@ class Boolean extends StandardField
         if ((int)$this->value === 1 || (bool)$this->value === true) {
             $properties['checked'] = true;
         }
+        // build enabled checkbox with value=1 and checked status
+        $enabled = (new Dom())->input($properties);
 
-        // render output html from template
-        return $this->engine->render('form/field/boolean', [
-            'properties' => $properties,
-            'label' => $this->model->getLabel($this->fieldName),
-            'helper' => $helper,
-            'hidden' => $disabled
-        ]);
+        return $disabled . $enabled;
     }
 }

@@ -2,34 +2,40 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+
+use Ffcms\Templex\Helper\Html\Dom;
+
 /**
- * Class Text. Text input field implementation
- * @package Ffcms\Templex\Helper\Form\Field
+ * Class Text. Build <input type="text"> field
+ * @package Ffcms\Templex\Helper\Html\Form\Field
  */
 class Text extends StandardField
 {
     /**
-     * Render output html
+     * Build <input> inline container and return html code
      * @param array|null $properties
-     * @param string|null $helper
      * @return null|string
      */
-    public function html(?array $properties = null, ?string $helper = null): ?string
+    public function html(?array $properties = null): ?string
     {
-        $properties['type'] = 'text';
+        // set type if not defined
+        if (!isset($properties['type'])) {
+            $properties['type'] = 'text';
+        }
+
+        // set global name name="fieldName"
         $properties['name'] = $this->fieldNameWithForm;
+
+        // set value if not defined
         if ($this->value) {
             $properties['value'] = htmlentities($this->value, ENT_QUOTES, 'UTF-8');
         }
 
+        // set id anchor
         if (!isset($properties['id'])) {
             $properties['id'] = $this->fieldNameWithForm;
         }
-
-        return $this->engine->render('form/field/text', [
-            'properties' => $properties,
-            'label' => $this->model->getLabel($this->fieldName),
-            'helper' => $helper
-        ]);
+        // build dom html <input properties value="" />
+        return (new Dom())->input($properties);
     }
 }

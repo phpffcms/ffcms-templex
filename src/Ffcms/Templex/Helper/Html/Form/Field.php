@@ -3,50 +3,46 @@
 namespace Ffcms\Templex\Helper\Html\Form;
 
 use Ffcms\Templex\Exceptions\Error;
-use League\Plates\Engine;
 use Ffcms\Templex\Helper\Html\Form\Field\FieldInterface;
 
+
 /**
- * Class Field. Make html code of form fields.
+ * Class Field. Build form fields
  * @package Ffcms\Templex\Helper\Html\Form
- * @method text(string $name, ?array $properties = null, ?string $helper = null)
- * @method textarea(string $name, ?array $properties = null, ?string $helper = null)
- * @method select(string $name, ?array $properties = null, ?string $helper = null)
- * @method password(string $name, ?array $properties = null, ?string $helper = null)
- * @method multiselect(string $name, ?array $properties = null, ?string $helper = null)
+ * @method text(string $name, ?array $properties = null)
+ * @method textarea(string $name, ?array $properties = null)
+ * @method select(string $name, ?array $properties = null)
+ * @method password(string $name, ?array $properties = null)
+ * @method multiselect(string $name, ?array $properties = null)
  * @method hidden(string $name, ?array $properties = null)
- * @method file(string $name, ?array $properties = null, ?string $helper = null)
- * @method boolean(string $name, ?array $properties = null, ?string $helper = null)
- * @method checkboxes(string $name, ?array $properties = null, ?string $helper = null)
+ * @method file(string $name, ?array $properties = null)
+ * @method boolean(string $name, ?array $properties = null)
+ * @method checkboxes(string $name, ?array $properties = null)
  */
 class Field
 {
     /** @var ModelInterface */
-    private $model;
+    protected $model;
 
-    /** @var Engine */
-    private $engine;
-
-    private $used;
+    /** @var array */
+    private $used = [];
 
     /**
-     * Field constructor.
+     * Field constructor. Pass model inside
      * @param ModelInterface $model
-     * @param Engine $engine
      */
-    public function __construct(ModelInterface $model, Engine $engine)
+    public function __construct(ModelInterface $model)
     {
         $this->model = $model;
-        $this->engine = $engine;
     }
 
     /**
-     * Some magic inside :)
-     * @param string $type
+     * Process call to dynamic method names, like ->text('field', [properties])
+     * @param string $name
      * @param array|null $arguments
-     * @return string|null
+     * @return null|string
      */
-    public function __call(string $type, ?array $arguments = null): ?string
+    public function __call(string $name, ?array $arguments = null)
     {
         // arguments[0] = model field name
         if (!$arguments || !isset($arguments[0]) || !is_string($arguments[0])) {
@@ -57,26 +53,17 @@ class Field
         $attr = (string)$arguments[0];
 
         // initialize worker for field type
-        $callback = 'Ffcms\Templex\Helper\Html\Form\Field\\' . ucfirst($type);
+        $callback = 'Ffcms\Templex\Helper\Html\Form\Field\\' . ucfirst($name);
         if (!class_exists($callback) || isset($this->used[$attr])) {
-            Error::add('Form field error: no type exist or field is alway used: ' . $attr . '[' . $type . ']', __FILE__);
+            Error::add('Form field error: no type exist or field is alway used: ' . $attr . '[' . $name . ']', __FILE__);
             return null;
         }
+
         // mark as used
         $this->used[$attr] = true;
 
         /** @var FieldInterface $field */
-        $field = new $callback($this->model, $attr, $this->engine);
-        return $field->html($arguments[1], $arguments[2]);
-    }
-
-    /**
-     * Manual any-way field made by your hands like $form->field()->manual(function(){return 'hello world';});
-     * @param \Closure $callback
-     * @return string|null
-     */
-    public function manual(\Closure $callback): ?string
-    {
-        return $callback();
+        $field = new $callback($this->model, $attr);
+        return $field->html($arguments[1]);
     }
 }

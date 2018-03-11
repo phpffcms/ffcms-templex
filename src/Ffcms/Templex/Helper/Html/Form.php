@@ -3,7 +3,7 @@
 namespace Ffcms\Templex\Helper\Html;
 
 use Ffcms\Templex\Helper\Html\Form\Button;
-use Ffcms\Templex\Helper\Html\Form\Button\Submit;
+use Ffcms\Templex\Helper\Html\Form\Fieldset;
 use Ffcms\Templex\Helper\Html\Form\Field;
 use Ffcms\Templex\Helper\Html\Form\ModelInterface;
 use League\Plates\Engine;
@@ -24,6 +24,8 @@ class Form implements ExtensionInterface
 
     /** @var Field */
     private $field;
+    /** @var Fieldset */
+    private $fieldset;
     /** @var Button */
     private $button;
 
@@ -40,7 +42,8 @@ class Form implements ExtensionInterface
         $instance = new self();
         $instance->model = $model;
         $instance->properties = $properties;
-        $instance->field = new Field($model, $engine);
+        $instance->field = new Field($model);
+        $instance->fieldset = new Fieldset($model, $engine, $instance->field);
         $instance->button = new Button($model, $engine);
         $instance::$engine = $engine;
 
@@ -88,12 +91,21 @@ class Form implements ExtensionInterface
     }
 
     /**
-     * Read-only access to 'field' property
+     * Get field class instance
      * @return Field
      */
     public function field(): Field
     {
         return $this->field;
+    }
+
+    /**
+     * Get fieldset class instance
+     * @return Fieldset
+     */
+    public function fieldset(): Fieldset
+    {
+        return $this->fieldset;
     }
 
     /**

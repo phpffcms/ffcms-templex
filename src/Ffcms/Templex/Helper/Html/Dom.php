@@ -62,7 +62,7 @@ class Dom
         'class', 'id', 'style', 'border',
         'href', 'src', 'link',
         'rel', 'title', 'alt',
-        'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name'
+        'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for'
     ];
 
     // private variables storage
@@ -79,7 +79,7 @@ class Dom
         $content = null;
         $properties = null;
         // get closure anonymous function and call it
-        if (isset($arguments[0]) && $arguments[0] instanceof \Closure) {
+        if (isset($arguments[0]) && is_callable($arguments[0])) {
             $closure = array_shift($arguments);
             $content = call_user_func_array($closure, $arguments);
         }
