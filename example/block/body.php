@@ -2,7 +2,7 @@
 
 /** @var Ffcms\Templex\Template\Template $this */
 
-$this->layout('layout', ['title' => 'lol kek']);
+$this->layout('layout', ['title' => 'Test page title']);
 
 class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
 {
@@ -43,27 +43,54 @@ class FakeForm extends \Ffcms\Templex\Helper\Html\Form\Model
     ->li(['text' => 'Local link', 'link' => ['controller/action', ['id' => 1]], ['class' => 'li-item']])
     ->display(); ?>
 
-<p>~ Table example:</p>
-<?= $this->table(['class' => 'test-table', 'style' => 'border: 1px solid'])
+<p>~ Table examples:</p>
+<div class="table-responsive">
+<?php
+
+$table = $this->table(['class' => 'table table-hover']);
+
+$table->selectize(0, 'inputTable1');
+$table->sortable([0 => 'idsort']);
+
+$table->head(['class' => 'thead-control'], [
+   ['text' => 'head1'],
+   ['text' => 'head2'],
+   ['text' => 'head3'],
+   ['text' => 'head4'],
+]);
+for ($i = 0; $i <= 10; $i++) {
+    $row = [];
+    for ($j = 0; $j <= 3; $j++) {
+        $row[$j] = ['text' => 'test ' . $j];
+    }
+    $table->row($row, $i);
+}
+
+echo $table->display();
+?>
+</div>
+<div class="table-responsive">
+<?= $this->table(['class' => 'table table-bordered'])
     ->selectize(0, 'inputCol')
     ->sortable([0 => 'id', 1 => 'colmn1'])
-    ->thead(['id' => 'test-head-id'], function(){
+    ->head(['id' => 'test-head-id'], function(){
         $heads = [];
         for ($i=0;$i<=5;$i++) {
-            $heads[] = ['text' => 'col ' . $i, 'properties' => ['style' => 'border-bottom: 1px solid #ddd;']];
+            $heads[] = ['text' => 'col ' . $i];
         }
         return $heads;
-    })->tbody(['class' => 'table-body'], function(){
+    })->body(['class' => 'table-body'], function(){
         $body = [];
         for ($i = 0; $i <= 10; $i++) { // cols
             for ($j = 0; $j <= 5; $j++) { // rows
-                $body[$i][$j] = ['text' => 'cell value: ' . $i . ':' . $j, 'properties' => ['style' => 'border-bottom: 1px solid #ddd;']];
+                $body[$i][$j] = ['text' => 'cell value: ' . $i . ':' . $j];
             }
         }
 
         return $body;
     })->display();
 ?>
+</div>
 
 <p>~ Listing example:</p>
 <?= $this->listing('ul', ['class' => 'nav'])
@@ -122,4 +149,16 @@ echo $form->stop();
 
 <?php $this->push('javascript') ?>
 <script>console.log('some javascript render');</script>
+
+<!-- some features for bootstrap 4 -->
+<script>
+$(document).ready(function(){
+    $('table.table-hover > tbody').delegate('tr', 'click', function(event){
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+})
+</script>
+
 <?php $this->end(); ?>

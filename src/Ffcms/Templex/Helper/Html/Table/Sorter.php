@@ -28,7 +28,7 @@ class Sorter implements RenderElement
         $this->url = $url;
         // if url not passed by - try to get from PHP
         if (!$this->url) {
-            $this->url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER[HTTP_HOST] . strtok($_SERVER[REQUEST_URI], '?');
+            $this->url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . strtok($_SERVER['REQUEST_URI'], '?');
         }
     }
 
@@ -50,10 +50,8 @@ class Sorter implements RenderElement
             $queryValue = (int)$_GET[$queryString];
         }
 
-        $ascLink = '';
-        $descLink = '';
         // build asc link
-        if ($queryValue === SORT_ASC) {
+        if ($queryValue === static::SORT_ASC) {
             $ascLink = "&uarr;";
         } else {
             $ascLink = (new Dom())->a(function () {
@@ -62,7 +60,7 @@ class Sorter implements RenderElement
         }
 
         // build desc link
-        if ($queryValue === SORT_DESC) {
+        if ($queryValue === static::SORT_DESC) {
             $descLink = "&darr;";
         } else {
             $descLink = (new Dom())->a(function () {

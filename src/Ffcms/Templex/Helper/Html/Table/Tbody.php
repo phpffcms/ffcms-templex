@@ -4,30 +4,58 @@ namespace Ffcms\Templex\Helper\Html\Table;
 
 use Ffcms\Templex\Helper\Html\Dom;
 
+/**
+ * Class Tbody. Process tbody container in table
+ * @package Ffcms\Templex\Helper\Html\Table
+ */
 class Tbody implements RenderElement
 {
+    /** @var array */
     private $properties;
-    private $items;
+    /** @var array */
+    private $items = [];
 
     /** @var Selectize */
     private $selectize;
 
     /**
-     * Tbody constructor.
-     * @param array|null $properties
-     * @param array $items
+     * Set tbody element properties
+     * @param array $properties
      */
-    public function __construct(?array $properties = null, array $items)
+    public function setProperties(array $properties)
     {
         $this->properties = $properties;
-        $this->items = $items;
+    }
+
+    /**
+     * Add row items in array
+     * @param array $items
+     */
+    public function addItems(array $items)
+    {
+        // array += array save key ordering instead of array_merge func
+        $this->items += $items;
+    }
+
+    /**
+     * Add item in items array
+     * @param array $item
+     * @param int|null $idx
+     */
+    public function addItem(array $item, ?int $idx = null)
+    {
+        if ($idx === null) {
+            $this->items[] = $item;
+        } elseif (isset($this->items[$idx])) {
+            $this->addItem($item, $idx++);
+        } else {
+            $this->items[$idx] = $item;
+        }
     }
 
     /**
      * Pass inside selectize options
-     * @param int $order
-     * @param strign $name
-     * @return string
+     * @param Selectize $selectize
      */
     public function initSelectize(Selectize $selectize)
     {
@@ -44,8 +72,9 @@ class Tbody implements RenderElement
 
         return $dom->tbody(function () use ($dom) { // build <tbody></tbody> section
             $tr = null;
+            ksort($this->items); // sort rows by index
             foreach ($this->items as $row) {
-                ksort($row); // sort columns in row
+                ksort($row); // sort columns in row by index
                 $tr .= $dom->tr(function () use ($dom, $row) { // build <tr></tr> section in <tbody>
                     $td = null;
                     foreach ($row as $order => $column) {
@@ -87,6 +116,7 @@ class Tbody implements RenderElement
     /**
      * Process selectize checkboxes
      * @param string|null $text
+     * @return string|null
      */
     private function processSelectize(?string $text): ?string
     {
@@ -95,6 +125,6 @@ class Tbody implements RenderElement
             'type' => 'checkbox',
             'name' => $this->selectize->name() . '[]'
         ]);
-        return $checkbox . $text;
+        return $checkbox . ' ' .  $text;
     }
 }

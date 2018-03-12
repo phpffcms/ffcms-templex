@@ -8,7 +8,7 @@ namespace Ffcms\Templex\Helper\Html\Table;
  */
 class Selectize implements RenderElement
 {
-    private $order;
+    private $order = -1;
     private $name;
 
     public function __construct(int $order, string $name)
@@ -43,18 +43,18 @@ class Selectize implements RenderElement
     }
 
     /**
-     * Render necessery html/css code
+     * Render necessary html/css code
      * @return null|string
      */
     public function html(): ?string
     {
-        return '<script>$(document).ready(function(){
-        var boxes = $(\'input[name="' . $this->name . '[]"]\');
-        $("input[name=' . $this->name . 'All]").change(function(){
-            $(boxes).each(function(){
-               $(this).prop("checked", !$(this).is(":checked")); 
-            });
+        return '<script>
+        var selectize_' . $this->name . ' = document.getElementsByName("' . $this->name . '[]");
+        document.getElementsByName("' . $this->name . 'All")[0].addEventListener("change", function() {
+            for (var i = 0; i < selectize_' . $this->name . '.length; i++) {
+                selectize_' . $this->name . '[i].checked = this.checked;
+            } 
         });
-    });</script>';
+        </script>';
     }
 }

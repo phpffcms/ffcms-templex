@@ -4,11 +4,13 @@ namespace Ffcms\Templex\Helper\Html\Table;
 
 use Ffcms\Templex\Helper\Html\Dom;
 
+/**
+ * Class Thead
+ * @package Ffcms\Templex\Helper\Html\Table
+ */
 class Thead implements RenderElement
 {
-    /**
-     * @var array|null
-     */
+    /** @var array|null */
     private $properties;
 
     /** @var array */
@@ -20,13 +22,20 @@ class Thead implements RenderElement
     private $sorter;
 
     /**
-     * Thead constructor. Build thead instance
-     * @param array|null $properties
-     * @param array|null $items
+     * Set thead element attributes
+     * @param array $properties
      */
-    public function __construct(?array $properties = null, array $items)
+    public function setProperties(array $properties)
     {
         $this->properties = $properties;
+    }
+
+    /**
+     * Set thead item titles as array
+     * @param array $items
+     */
+    public function setItems(array $items)
+    {
         $this->items = $items;
     }
 
@@ -50,7 +59,7 @@ class Thead implements RenderElement
 
     /**
      * @inheritdoc
-     * @return null|string|void
+     * @return null|string
      */
     public function html(): ?string
     {
@@ -77,7 +86,7 @@ class Thead implements RenderElement
 
                         // process sorter elements
                         if ($this->sorter) {
-                            $text .= $this->sorter->getColumnSorters($order);
+                            $text .= ' ' . $this->sorter->getColumnSorters($order);
                         }
 
                         return $text; // <th>text</th>
@@ -91,6 +100,7 @@ class Thead implements RenderElement
     /**
      * Process selectize features for head
      * @param null|string $text
+     * @return string
      */
     private function processSelectize(?string $text): ?string
     {
@@ -99,6 +109,6 @@ class Thead implements RenderElement
             'name' => $this->selectize->name() . 'All'
         ]);
 
-        return $input . $text;
+        return $input . ' ' . $text;
     }
 }

@@ -38,6 +38,8 @@ class Table implements ExtensionInterface
     {
         $instance = new self();
         $instance->tableProperties = $p;
+        $instance->tbody = new Tbody();
+        $instance->thead = new Thead();
         return $instance;
     }
 
@@ -57,24 +59,26 @@ class Table implements ExtensionInterface
      * @param $items
      * @return Table
      */
-    public function thead(?array $properties = null, $items): Table
+    public function head(?array $properties = null, $items): Table
     {
         // sounds like closure? execute it and get result )
         if (is_callable($items)) {
             $items = $items();
         }
 
-        // check if thead defined and titles are iterable
-        if (is_iterable($items)) {
-            // throw exception
-            $this->thead = new Thead($properties, $items);
-            if ($this->selectize) {
-                $this->thead->initSelectize($this->selectize);
-            }
+        // pass properties in thead instance
+        if ($properties) {
+            $this->thead->setProperties($properties);
+        }
 
-            if ($this->sorter) {
-                $this->thead->initSorter($this->sorter);
-            }
+        // pass thead items
+        if (is_array($items)) {
+            $this->thead->setItems($items);
+        }
+
+        // check if sorter is enabled & initialize it
+        if ($this->sorter) {
+            $this->thead->initSorter($this->sorter);
         }
 
         return $this;
@@ -86,20 +90,34 @@ class Table implements ExtensionInterface
      * @param array|\Closure $items
      * @return Table
      */
-    public function tbody(?array $properties = null, $items): Table
+    public function body(?array $properties = null, $items): Table
     {
         if (is_callable($items)) {
             $items = $items();
         }
 
-        // check if array given and process items
-        if (is_iterable($items)) {
-            $this->tbody = new Tbody($properties, $items);
-            if ($this->selectize) {
-                $this->tbody->initSelectize($this->selectize);
-            }
+        // check if properties is used
+        if ($properties) {
+            $this->tbody->setProperties($properties);
         }
 
+        // add items into tbody array
+        if (is_array($items)) {
+            $this->tbody->addItems($items);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add row in tbody display
+     * @param array $item
+     * @param int|null $idx
+     * @return Table
+     */
+    public function row(array $item, ?int $idx = null): Table
+    {
+        $this->tbody->addItem($item, $idx);
         return $this;
     }
 
@@ -112,6 +130,8 @@ class Table implements ExtensionInterface
     public function selectize(int $order, string $name): Table
     {
         $this->selectize = new Selectize($order, $name);
+        $this->tbody->initSelectize($this->selectize);
+        $this->thead->initSelectize($this->selectize);
         return $this;
     }
 
