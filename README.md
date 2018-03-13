@@ -76,7 +76,7 @@ Templex provide simple and clear php-based html code generator. The main part of
 In this section you will see the main features of html code generator helpers. 
 
 #### Listing
-To draw a simple listing you should use ```$this->listing('type', [properties])``` and then call ```li([items], [properties])``` to add each one <li></li> element. 
+To draw a simple listing you should use ```$this->listing('type', [properties])``` and then call ```li([items], [properties])``` to add each one ```<li></li>``` element. 
 
 Listing can be used inline or as named factory object. Inline object usage are prefered for pre-defined elements that should be displayed "right here":
 ```php
