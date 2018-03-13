@@ -75,6 +75,8 @@ class Tbody implements RenderElement
             ksort($this->items); // sort rows by index
             foreach ($this->items as $row) {
                 ksort($row); // sort columns in row by index
+                $rowProperties = $row['properties'];
+                unset($row['properties']);
                 $tr .= $dom->tr(function () use ($dom, $row) { // build <tr></tr> section in <tbody>
                     $td = null;
                     foreach ($row as $order => $column) {
@@ -107,7 +109,7 @@ class Tbody implements RenderElement
                         }, $column['properties']);
                     }
                     return $td;
-                }, $row['properties']);
+                }, $rowProperties);
             }
             return $tr;
         }, $this->properties);
