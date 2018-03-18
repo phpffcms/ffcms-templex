@@ -23,7 +23,61 @@
 </head>
 <body>
 
-<div class="container">
+<!--<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>-->
+
+<?php
+    echo $this->bootstrap()->navbar(['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top'], true) // (properties, container=false)
+    ->id('my-navbar')
+    ->brand(['text' => 'My website'])
+    ->menu('left', ['text' => 'Item #1', 'link' => ['controller/action']])
+    ->menu('left', ['text' => 'Item #2', 'link' => ['controller/action']])
+    ->menu('left', ['text' => 'Item #3', 'link' => ['controller/action']])
+    ->menu('left', ['text' => 'Item #4', 'dropdown' => [
+        ['text' => 'Item #4-1', 'link' => ['con/act1']],
+        ['text' => 'Item #4-2', 'link' => ['con/act2']]
+    ]])
+    ->menu('right', ['text' => 'Item #1', 'link' => ['controller/action']])
+    ->display()
+?>
+
+<div class="container" style="margin-top: 80px;">
     <?php if($this->section('body')): ?>
         <?= $this->section('body') ?>
     <?php else: ?>
