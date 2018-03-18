@@ -85,6 +85,16 @@ class Url
     }
 
     /**
+     * Build link from item array
+     * @param array $item
+     * @return array|null
+     */
+    public static function link(array $item): ?string
+    {
+        return self::to($item[0], $item[1], $item[2]);
+    }
+
+    /**
      * Build path from array
      * @param array|null $url
      * @return null|string

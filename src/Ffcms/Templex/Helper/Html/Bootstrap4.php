@@ -4,6 +4,7 @@ namespace Ffcms\Templex\Helper\Html;
 
 
 use Ffcms\Templex\Helper\Html\Bootstrap4\Nav;
+use Ffcms\Templex\Helper\Html\Bootstrap4\Navbar;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 
@@ -13,6 +14,10 @@ use League\Plates\Extension\ExtensionInterface;
  */
 class Bootstrap4 implements ExtensionInterface
 {
+    const CSS_TYPES = [
+        'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'
+    ];
+
     public static $engine;
 
     protected static $instance;
@@ -58,7 +63,7 @@ class Bootstrap4 implements ExtensionInterface
      */
     public function alert(string $type, string $text, bool $html = false): ?string
     {
-        if (!in_array($type, ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'], true)) {
+        if (!in_array($type, static::CSS_TYPES, true)) {
             return null;
         }
 
@@ -75,5 +80,15 @@ class Bootstrap4 implements ExtensionInterface
 
     }
 
+    /**
+     * Build navbar instance controller
+     * @param array|null $properties
+     * @param bool $container
+     * @return Navbar
+     */
+    public function navbar(?array $properties = null, bool $container = false)
+    {
+        return Navbar::factory($properties, $container);
+    }
 
 }
