@@ -70,10 +70,14 @@
     ->menu('left', ['text' => 'Item #2', 'link' => ['controller/action']])
     ->menu('left', ['text' => 'Item #3', 'link' => ['controller/action']])
     ->menu('left', ['text' => 'Item #4', 'dropdown' => [
-        ['text' => 'Item #4-1', 'link' => ['con/act1']],
-        ['text' => 'Item #4-2', 'link' => ['con/act2']]
+        ['text' => 'Item #4-1', 'link' => ['con/act1'], 'class' => 'dropdown-item'],
+        ['text' => 'Item #4-2', 'link' => ['sdf/act2'], 'class' => 'dropdown-item']
     ]])
     ->menu('right', ['text' => 'Item #1', 'link' => ['controller/action']])
+    ->menu('right', ['text' => 'Item #2', 'dropdown' => [
+        ['text' => 'Item #2-1', 'link' => ['con/act1'], 'class' => 'dropdown-item'],
+        ['text' => 'Item #2-2', 'link' => ['sdf/act2'], 'class' => 'dropdown-item']
+    ]])
     ->display()
 ?>
 

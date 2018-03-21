@@ -38,6 +38,9 @@ class Li
                 $this->html = $this->buildLinkItem();
             } elseif (isset($this->context['text']) && isset($this->context['tab'])) { // tab content item
                 $this->html = null; // @todo!!!
+            } elseif (isset($this->context['dropdown']) && isset($this->context['text'])) {
+                // dropdown bootstrap implementation
+                $this->html = $this->buildDropdownItem();
             }
         } else {
             $this->html = $this->buildTextItem();
@@ -56,7 +59,7 @@ class Li
         }
 
         // 0 = controller/action, 1 = [argument array], 2 = [get query array]
-        $url = Url::to($this->context['link'][0], $this->context['link'][1], $this->context['link'][2]);
+        $url = Url::link((array)$this->context['link']);
 
         // return element
         return (new Dom())->li(function () use ($url) { // <li><li> container
@@ -77,6 +80,53 @@ class Li
 
                 return $text;
             }, $ahrefProperties);
+        }, $this->properties);
+    }
+
+    /**
+     * Build html code for dropdown elements as li>a div [a]
+     * @return null|string
+     */
+    private function buildDropdownItem(): ?string
+    {
+        if (!is_array($this->context['dropdown']) || count($this->context['dropdown']) < 1) {
+            return null;
+        }
+        // get dropdown header & items
+        $items = $this->context['dropdown'];
+        $text = $this->context['text'];
+
+        // build output html code
+        return (new Dom())->li(function() use ($items, $text){
+            if (!isset($this->properties['anchor']['id'])) {
+                $this->properties['anchor']['id'] = 'auto-dropdown-' . mt_rand(0, 1000000);
+            }
+            // build link anchor with text & dropdown id
+            $html = (new Dom())->a(function() use ($text) {
+                return htmlentities($text, null, 'UTF-8');
+            }, $this->properties['anchor']);
+            // build dropdown div construction
+            $html .= (new Dom())->div(function() use ($items){
+                $output = null;
+                foreach ($items as $item) {
+                    if (!isset($item['text']) || !isset($item['link'])) {
+                        continue;
+                    }
+                    // build dropdown link in dropdown block
+                    $link = Url::link($item['link']);
+                    $text = $item['text'];
+                    unset($item['link'], $item['text']);
+                    $item['href'] = $link;
+                    $output .= (new Dom())->a(function() use ($text){
+                        return htmlentities($text, null, 'UTF-8');
+                    }, $item);
+                }
+
+                return $output;
+            }, $this->properties['container']);
+
+
+            return $html;
         }, $this->properties);
     }
 

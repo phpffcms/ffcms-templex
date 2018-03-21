@@ -24,6 +24,8 @@ class Navbar
     // brand item
     private $brand;
 
+    private $dropdownCounter = 1;
+
     /**
      * Navbar constructor.
      * @param array|null $properties
@@ -169,10 +171,40 @@ class Navbar
         $class = ($pos === 'right' ? 'ml-auto' : 'mr-auto');
         $listing = Listing::factory('ul', ['class' => 'navbar-nav ' . $class]);
         foreach ($this->{$pos} as $item) {
+            if ($item['dropdown']) {
+                $item = $this->prepareDropDown($item);
+            }
             $listing->li($item, $item['properties']);
         }
 
         return $listing->display();
+    }
+
+    /**
+     * Prepare dropdown attributes
+     * @param array $item
+     * @return array|null
+     */
+    private function prepareDropDown(array $item): ?array
+    {
+        // set automatic id if not defined
+        if (!$this->id || !is_string($this->id)) {
+            $this->id = 'navid-auto-' . mt_rand(0, 1000000);
+        }
+
+        $item['properties']['class'] .= ' dropdown';
+        $item['properties']['anchor'] = [
+            'class' => 'nav-link dropdown-toggle',
+            'href' => '#',
+            'id' => $this->id . '-' . $this->dropdownCounter,
+            'data-toggle' => 'dropdown',
+            'aria-haspopup' => 'true',
+            'aria-expanded' => 'false'
+        ];
+        $item['properties']['container']['class'] = 'dropdown-menu';
+        $this->dropdownCounter++;
+
+        return $item;
     }
 
     public function __toString()
