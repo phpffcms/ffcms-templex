@@ -3,6 +3,7 @@
 namespace Ffcms\Templex\Helper\Html\Bootstrap4;
 
 
+use Ffcms\Templex\Helper\Html\Dom;
 use Ffcms\Templex\Helper\Html\Listing;
 use League\Plates\Engine;
 
@@ -12,6 +13,11 @@ use League\Plates\Engine;
  */
 class Nav extends Listing
 {
+    private $id;
+    private $tabIndex = 0;
+
+    private $tabContent;
+
     /**
      * Initialize nav instance
      * @param string $type
@@ -26,6 +32,7 @@ class Nav extends Listing
         $instance = new self();
         $instance->type = $type;
         $instance->properties = $properties;
+        $instance->id = $properties['id'] ?? 'nav-auto-' . mt_rand(0, 1000000);
         return $instance;
     }
 
@@ -52,21 +59,53 @@ class Nav extends Listing
         }
 
         if (is_array($context)) {
+            // process tab properties
             if (isset($context['tab'])) {
+                $this->properties['role'] = 'tablist';
+                $this->properties['id'] = $this->id . '-tab';
+                $context['link'] = ['#' . $this->id . '-' . $this->tabIndex];
+                $properties['id'] = $this->id . '-' . $this->tabIndex . '-tab';
+                $properties['data-toggle'] = 'tab';
+                $properties['role'] = 'tab';
 
+                if (is_callable($context['tab'])) {
+                    $context['tab'] = $context['tab']();
+                }
+                // build tab content html code
+                $this->tabContent .= (new Dom())->div(function() use ($context){
+                    return $context['tab'];
+                }, ['class' => 'tab-pane fade', 'id' => $this->id . '-' . $this->tabIndex, 'role' => 'tabpanel']);
+
+                $this->tabIndex++;
             } else {
                 $context['urlEqual'] = true;
-                if (!isset($properties['class'])) {
-                    $properties['class'] = 'nav-item';
-                }
-                if (!isset($context['linkProperties']['class'])) {
-                    $context['linkProperties']['class'] = 'nav-link';
-                }
-
-                $this->li[] = new Listing\Li($context, $properties);
             }
+
+            // build menu element and define default properties
+            if (!isset($properties['class'])) {
+                $properties['class'] = 'nav-item';
+            }
+            if (!isset($context['linkProperties']['class'])) {
+                $context['linkProperties']['class'] = 'nav-link';
+            }
+
+            $this->li[] = new Listing\Li($context, $properties);
         }
 
         return $this;
+    }
+
+    /**
+     * Add tab content for listings
+     * @return null|string
+     */
+    public function display(): ?string
+    {
+        $html = parent::display();
+        $html .= (new Dom())->div(function(){
+            return $this->tabContent;
+        }, ['class' => 'tab-content', 'id' => $this->id . '-tabContent']);
+
+        return $html;
     }
 }

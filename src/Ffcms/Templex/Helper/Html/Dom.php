@@ -63,7 +63,8 @@ class Dom
         'href', 'src', 'link',
         'rel', 'title', 'alt',
         'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for',
-        'data-toggle', 'data-target', 'aria-controls', 'aria-expanded', 'aria-label'
+        'data-toggle', 'data-target', 'aria-controls', 'aria-expanded', 'aria-label',
+        'role'
     ];
 
     // private variables storage

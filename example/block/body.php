@@ -144,7 +144,6 @@ echo $form->stop();
 
 <?= $this->bootstrap()->alert('primary', 'Test alert message') ?>
 
-
 <?php $this->end(); ?>
 
 <?php $this->push('javascript') ?>
