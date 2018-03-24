@@ -75,9 +75,53 @@ class Bootstrap4 implements ExtensionInterface
         }, ['class' => 'alert alert-' . $type]);
     }
 
-    public function badge(string $type, string $text)
+    /**
+     * Build badge item
+     * @param string $type
+     * @param string $text
+     * @return null|string
+     */
+    public function badge(string $type, string $text): ?string
     {
+        if (!in_array($type, static::CSS_TYPES, true)) {
+            return null;
+        }
 
+        return (new Dom())->span(function() use ($text) {
+            return htmlspecialchars($text, null, 'UTF-8');
+        },['class' => 'badge badge-' . $type]);
+    }
+
+    /**
+     * Build buttom dom
+     * @param string $type
+     * @param string $text
+     * @param array|null $properties
+     * @return null|string
+     */
+    public function button(string $type, string $text, ?array $properties = null): ?string
+    {
+        // check if button is <input />, <button></button> or <a></a> type
+        if (!in_array($type, ['input', 'button', 'a'], true)) {
+            return null;
+        }
+
+        if ($type === 'button') {
+            $properties['type'] = 'button';
+        } else if ($type === 'input') {
+            $properties['value'] = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+            if (!isset($properties['type'])) {
+                $properties['type'] = 'submit';
+            }
+        }
+
+        $properties['class'] = 'btn ' . $properties['class'];
+        return (new Dom())->{$type}(function() use ($text, $type, $properties) {
+            if ($type === 'input') {
+                return null;
+            }
+            return htmlspecialchars($text, null, 'UTF-8');
+        }, $properties);
     }
 
     /**

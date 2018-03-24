@@ -142,7 +142,14 @@ echo $form->stop();
         return '<div>Some strong content body in anonymous function</div>';
     }])->display() ?>
 
+<!-- test alert -->
 <?= $this->bootstrap()->alert('primary', 'Test alert message') ?>
+
+
+<!-- test buttons -->
+<?= $this->bootstrap()->button('button', 'My button #1', ['class' => 'btn-success']) ?>
+<?= $this->bootstrap()->button('a', 'My button #2', ['href' => \Ffcms\Templex\Url\Url::link(['controller/action']), 'class' => 'btn-danger']) ?>
+<?= $this->bootstrap()->button('input', 'My button #3', ['class' => 'btn-primary']); ?>
 
 <?php $this->end(); ?>
 

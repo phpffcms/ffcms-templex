@@ -64,9 +64,10 @@ class Nav extends Listing
                 $this->properties['role'] = 'tablist';
                 $this->properties['id'] = $this->id . '-tab';
                 $context['link'] = ['#' . $this->id . '-' . $this->tabIndex];
-                $properties['id'] = $this->id . '-' . $this->tabIndex . '-tab';
-                $properties['data-toggle'] = 'tab';
-                $properties['role'] = 'tab';
+
+                $context['linkProperties']['id'] = $this->id . '-' . $this->tabIndex . '-tab';
+                $context['linkProperties']['data-toggle'] = 'tab';
+                $context['linkProperties']['role'] = 'tab';
 
                 if (is_callable($context['tab'])) {
                     $context['tab'] = $context['tab']();
