@@ -17,7 +17,9 @@ abstract class StandardField implements FieldInterface
     protected $value;
 
     protected $attrName;
-    protected $fieldNameWithForm;
+
+    protected $formFieldName;
+    protected $formFieldId;
 
     /**
      * StandardField constructor.
@@ -54,6 +56,7 @@ abstract class StandardField implements FieldInterface
         // get value if dot notation used for array field
         if ($attr !== $full) {
             $nesting = trim(strstr($full, '.'), '.');
+            $name = '[' . $attr . '][' . str_replace('.', '][', $nesting) . ']';
             $attr .= '-' . str_replace('.', '-', $nesting);
             // check if nesting contains dots
             if (strpos($nesting, '.') === false) {
@@ -64,19 +67,32 @@ abstract class StandardField implements FieldInterface
                     $value = $value[$path];
                 }
             }
+            $this->formFieldName = $this->model->getFormName() . $name;
+        } else {
+            $this->formFieldName = $this->model->getFormName() . '[' . $attr . ']';
         }
 
+        $this->formFieldId = $this->model->getFormName() . '-' . $attr;
+
         $this->attrName = $attr;
-        $this->fieldNameWithForm = $this->model->getFormName() . '-' . $this->attrName;
         $this->value = $value;
     }
 
     /**
-     * Get field id="" or name="" valid attribute value
+     * Get field id="" valid attribute value
      * @return string|null
      */
-    public function getUniqueNameId()
+    public function getUniqueFieldId(): ?string
     {
-        return $this->fieldNameWithForm;
+        return $this->formFieldId;
+    }
+
+    /**
+     * Get field name="" attribute value
+     * @return string|null
+     */
+    public function getUniqueFieldName(): ?string
+    {
+        return $this->formFieldName;
     }
 }

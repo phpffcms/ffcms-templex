@@ -19,10 +19,10 @@ class Boolean extends StandardField
      */
     public function html(?array $properties = null): ?string
     {
-        $properties['name'] = $this->fieldNameWithForm;
+        $properties['name'] = $this->getUniqueFieldName();
         $properties['type'] = 'checkbox';
         if (!isset($properties['id'])) {
-            $properties['id'] = $this->fieldNameWithForm;
+            $properties['id'] = $this->getUniqueFieldId();
         }
 
         // build fake checkbox with value=0 and hidden type

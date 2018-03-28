@@ -71,8 +71,12 @@ class Bootstrap4 implements ExtensionInterface
             if (!$html) {
                 $text = htmlspecialchars($text, null, 'UTF-8');
             }
+            // add "dismiss" icon with javascript close features
+            $text .= (new Dom())->button(function(){
+                return (new Dom())->span(function(){ return "&times;"; }, ['aria-hidden' => 'true']);
+            }, ['type' => 'button', 'class' => 'close', 'data-dismiss' => 'alert', 'aria-label' => 'Close']);
             return $text;
-        }, ['class' => 'alert alert-' . $type]);
+        }, ['class' => 'alert alert-' . $type . ' alert-dismissible fade show', 'role' => 'alert']);
     }
 
     /**

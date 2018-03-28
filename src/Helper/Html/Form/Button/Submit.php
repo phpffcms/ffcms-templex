@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Button;
 
+use Ffcms\Templex\Helper\Html\Form\ModelInterface;
 use League\Plates\Engine;
 
 /**
@@ -11,14 +12,17 @@ use League\Plates\Engine;
 class Submit implements ButtonInterface
 {
     private $engine;
+    private $model;
 
     /**
      * Submit constructor.
      * @param Engine $engine
+     * @param ModelInterface $model
      */
-    public function __construct(Engine $engine)
+    public function __construct(Engine $engine, ModelInterface $model)
     {
         $this->engine = $engine;
+        $this->model = $model;
     }
 
     /**
@@ -32,6 +36,7 @@ class Submit implements ButtonInterface
             $properties['type'] = 'button';
         }
 
+        $properties['name'] = $this->model->getFormName() . '[submit]';
         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
 
         return $this->engine->render('form/button/submit', [

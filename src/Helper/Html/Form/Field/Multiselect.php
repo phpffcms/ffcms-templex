@@ -35,9 +35,9 @@ class Multiselect extends StandardField
         unset($properties['optionsKey']);
 
         // define name and id
-        $properties['name'] = $this->fieldNameWithForm . '[]';
+        $properties['name'] = $this->getUniqueFieldName() . '[]';
         if (!isset($properties['id'])) {
-            $properties['id'] = $this->fieldNameWithForm;
+            $properties['id'] = $this->getUniqueFieldId();
         }
 
         // render output html code

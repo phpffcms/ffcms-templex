@@ -18,7 +18,7 @@ abstract class Model implements ModelInterface
     {
         $cname = get_class($this);
         if (!$this->_name) {
-            $this->_name = substr($cname, strrpos($cname, '\\'));
+            $this->_name = substr($cname, strrpos($cname, '\\')+1);
         }
     }
 

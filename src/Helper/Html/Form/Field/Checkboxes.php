@@ -30,7 +30,7 @@ class Checkboxes extends StandardField
         unset($properties['options'], $properties['optionsKey'], $properties['value'], $properties['id']);
 
         if (!isset($properties['name'])) {
-            $properties['name'] = $this->fieldNameWithForm;
+            $properties['name'] = $this->getUniqueFieldName();
         }
 
         $properties['name'] .= '[]';
@@ -44,9 +44,9 @@ class Checkboxes extends StandardField
             } else {
                 unset($properties['checked']);
             }
-            $properties['id'] = $this->fieldNameWithForm . '-' . $idx;
+            $properties['id'] = $this->getUniqueFieldId() . '-' . $idx;
             $arrayProperties = $properties['arrayLabelProperties'] ?? null;
-            $arrayProperties['for'] = $this->fieldNameWithForm . '-' . $idx;
+            $arrayProperties['for'] = $this->getUniqueFieldId() . '-' . $idx;
 
             $html .= (new Dom())->input($properties); // input type=checkbox
             $html .= (new Dom())->label(function () use ($option){

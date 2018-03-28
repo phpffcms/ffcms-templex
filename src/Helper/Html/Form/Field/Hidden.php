@@ -28,13 +28,13 @@ class Hidden extends StandardField
 
         // set tag attributes
         $properties['type'] = 'hidden';
-        $properties['name'] = $this->fieldNameWithForm;
+        $properties['name'] = $this->getUniqueFieldName();
         if (!isset($properties['value'])) {
             $properties['value'] = htmlentities($this->value, ENT_QUOTES, 'UTF-8');
         }
 
         if (!isset($properties['id'])) {
-            $properties['id'] = $this->fieldNameWithForm;
+            $properties['id'] = $this->getUniqueFieldId();
         }
 
         // render output dom html

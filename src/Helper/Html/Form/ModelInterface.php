@@ -2,6 +2,11 @@
 
 namespace Ffcms\Templex\Helper\Html\Form;
 
+/**
+ * Interface ModelInterface
+ * @package Ffcms\Templex\Helper\Html\Form
+ * @property string|null $_csrf_token
+ */
 interface ModelInterface
 {
     /**

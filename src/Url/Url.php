@@ -74,7 +74,6 @@ class Url
         }
 
         $controllerAction = trim($controllerAction, '/');
-        // @todo: pass url/subdir to instance initialization
         $worker = new self();
 
         // build base url with path from array

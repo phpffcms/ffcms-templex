@@ -78,7 +78,11 @@ class Form implements ExtensionInterface
             $this->properties['method'] = 'POST';
         }
 
-        return '<form' . Dom::applyProperties($this->properties) . '>';
+        $form = '<form' . Dom::applyProperties($this->properties) . '>';
+        if ($csrf) {
+            $form .= $this->field()->hidden('_csrf_token', ['value' => $this->model->_csrf_token]);
+        }
+        return $form;
     }
 
     /**

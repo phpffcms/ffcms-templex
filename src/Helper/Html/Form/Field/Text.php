@@ -24,7 +24,7 @@ class Text extends StandardField
         }
 
         // set global name name="fieldName"
-        $properties['name'] = $this->fieldNameWithForm;
+        $properties['name'] = $this->getUniqueFieldName();
 
         // set value if not defined
         if ($this->value) {
@@ -33,7 +33,7 @@ class Text extends StandardField
 
         // set id anchor
         if (!isset($properties['id'])) {
-            $properties['id'] = $this->fieldNameWithForm;
+            $properties['id'] = $this->getUniqueFieldId();
         }
         // build dom html <input properties value="" />
         return (new Dom())->input($properties);

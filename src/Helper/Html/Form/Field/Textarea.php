@@ -16,9 +16,9 @@ class Textarea extends StandardField
     public function html(?array $properties = null): ?string
     {
         // set global name name="fieldName"
-        $properties['name'] = $this->fieldNameWithForm;
+        $properties['name'] = $this->getUniqueFieldName();
         if (!isset($properties['id'])) {
-            $properties['id'] = $this->fieldNameWithForm;
+            $properties['id'] = $this->getUniqueFieldId();
         }
 
         return (new Dom())->textarea(function() {

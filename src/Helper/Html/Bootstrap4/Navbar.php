@@ -202,8 +202,14 @@ class Navbar
             'aria-expanded' => 'false'
         ];
         $item['properties']['container']['class'] = 'dropdown-menu';
-        $this->dropdownCounter++;
+        // add class="dropdown-item" for elements in dropdown
+        foreach ($item['dropdown'] as $idx => $dd) {
+            if (!isset($dd['class'])) {
+                $item['dropdown'][$idx]['class'] = 'dropdown-item';
+            }
+        }
 
+        $this->dropdownCounter++;
         return $item;
     }
 

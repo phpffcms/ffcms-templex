@@ -20,10 +20,10 @@ class File extends StandardField
     public function html(?array $properties = null): ?string
     {
         $properties['type'] = 'file';
-        $properties['name'] = $this->fieldNameWithForm;
+        $properties['name'] = $this->getUniqueFieldName();
 
         if (!isset($properties['id'])) {
-            $properties['id'] = $this->fieldNameWithForm;
+            $properties['id'] = $this->getUniqueFieldId();
         }
 
         return (new Dom())->input($properties);

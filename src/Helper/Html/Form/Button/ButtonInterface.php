@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Button;
 
+use Ffcms\Templex\Helper\Html\Form\ModelInterface;
 use League\Plates\Engine;
 
 interface ButtonInterface
@@ -9,8 +10,9 @@ interface ButtonInterface
     /**
      * ButtonInterface constructor.
      * @param Engine $engine
+     * @param ModelInterface $model
      */
-    public function __construct(Engine $engine);
+    public function __construct(Engine $engine, ModelInterface $model);
 
     /**
      * @param string $text

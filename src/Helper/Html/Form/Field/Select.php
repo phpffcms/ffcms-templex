@@ -31,9 +31,9 @@ class Select extends StandardField
         unset($properties['optionsKey']);
 
         // set name & ids
-        $properties['name'] = $this->fieldNameWithForm;
+        $properties['name'] = $this->getUniqueFieldName();
         if (!isset($properties['id'])) {
-            $properties['id'] = $this->fieldNameWithForm;
+            $properties['id'] = $this->getUniqueFieldId();
         }
 
         return (new Dom())->select(function() use ($options, $keyOrder) {
