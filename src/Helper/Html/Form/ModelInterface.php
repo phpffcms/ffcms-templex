@@ -27,4 +27,10 @@ interface ModelInterface
      * @return string
      */
     public function getFormName(): string;
+
+    /**
+     * Get failed validation attributes name as array
+     * @return array|null
+     */
+    public function getBadAttributes(): ?array;
 }

@@ -11,6 +11,8 @@ abstract class Model implements ModelInterface
     public $_csrf_token;
     public $_name;
 
+    protected $_badAttr;
+
     /**
      * Model constructor.
      */
@@ -54,5 +56,14 @@ abstract class Model implements ModelInterface
     public function getFormName(): string
     {
         return $this->_name;
+    }
+
+    /**
+     * Get fail validated attribute names
+     * @return array|null
+     */
+    public function getBadAttributes(): ?array
+    {
+        return $this->_badAttr;
     }
 }

@@ -77,21 +77,24 @@ class Form implements ExtensionInterface
         if (!$this->properties['method']) {
             $this->properties['method'] = 'POST';
         }
-
-        $form = '<form' . Dom::applyProperties($this->properties) . '>';
-        if ($csrf) {
-            $form .= $this->field()->hidden('_csrf_token', ['value' => $this->model->_csrf_token]);
-        }
-        return $form;
+        // render form template
+        return static::$engine->render('form/start', [
+            'properties' => $this->properties,
+            'csrfField' => ($csrf ? $this->field()->hidden('_csrf_token', ['value' => $this->model->_csrf_token]) : null),
+        ]);
     }
 
     /**
      * Form stop - closing tag & javascript features
+     * @param bool $validator
      * @return string
      */
-    public function stop(): string
+    public function stop($validator = true): string
     {
-        return '</form>';
+        return static::$engine->render('form/stop', [
+            'validator' => $validator,
+            'model' => $this->model
+        ]);
     }
 
     /**
