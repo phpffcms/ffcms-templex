@@ -134,9 +134,22 @@ class Bootstrap4 implements ExtensionInterface
      * @param bool $container
      * @return Navbar
      */
-    public function navbar(?array $properties = null, bool $container = false)
+    public function navbar(?array $properties = null, bool $container = false): Navbar
     {
         return Navbar::factory($properties, $container);
+    }
+
+    /**
+     * Build pagination instance
+     * @param array $url
+     * @param array|null $properties
+     * @param array|null $liProperties
+     * @param array|null $aProperties
+     * @return Pagination
+     */
+    public function pagination(array $url, ?array $properties = null, ?array $liProperties = null, ?array $aProperties = null): Pagination
+    {
+        return Bootstrap4\Pagination::factory($url, $properties, $liProperties, $aProperties);
     }
 
 }

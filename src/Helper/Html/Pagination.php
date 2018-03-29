@@ -14,10 +14,10 @@ class Pagination implements ExtensionInterface
 {
     private $engine;
 
-    private $url;
-    private $properties;
-    private $liProperties;
-    private $aProperties;
+    protected $url;
+    protected $properties;
+    protected $liProperties;
+    protected $aProperties;
 
     private $count;
     private $page;
@@ -43,9 +43,9 @@ class Pagination implements ExtensionInterface
      * @param array|null $properties
      * @param array|null $liProperties
      * @param array|null $aProperties
-     * @return Pagination
+     * @return self
      */
-    public static function factory(array $url, ?array $properties = null, ?array $liProperties = null, ?array $aProperties = null): Pagination
+    public static function factory(array $url, ?array $properties = null, ?array $liProperties = null, ?array $aProperties = null)
     {
         $instance = new self();
         $instance->url = $url;
@@ -63,7 +63,7 @@ class Pagination implements ExtensionInterface
      * @param int $step
      * @return Pagination
      */
-    public function size(int $count, int $page = 0, int $step = 10): Pagination
+    public function size(int $count, int $page = 0, int $step = 10): self
     {
         $this->count = $count;
         $this->page = $page;
