@@ -1,6 +1,7 @@
 <?php
 
 namespace Ffcms\Templex\Url;
+use Ffcms\Templex\Helper\Html\Dom;
 
 /**
  * Class Url. Build urls inside project
@@ -91,6 +92,24 @@ class Url
     public static function link(array $item): ?string
     {
         return self::to($item[0], $item[1], $item[2]);
+    }
+
+    /**
+     * Fast build <a href="">text</a> link based on Url helper class
+     * @param array $item
+     * @param string $text
+     * @param array|null $properties
+     * @return null|string
+     */
+    public static function a(array $item, string $text, ?array $properties = null): ?string
+    {
+        $properties['href'] = self::link($item);
+        return (new Dom())->a(function() use ($text, $properties){
+            if (!$properties['html']) {
+                $text = htmlspecialchars($text, null, 'UTF-8');
+            }
+            return $text;
+        }, $properties);
     }
 
     /**
