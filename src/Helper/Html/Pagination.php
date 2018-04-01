@@ -85,7 +85,7 @@ class Pagination implements ExtensionInterface
     private function build(): void
     {
         // current page >= total page count or total page count lower then 1
-        if ($this->page >= $this->pages || $this->pages <= 1) {
+        if ($this->page > $this->pages || $this->pages < 1) {
             Error::add('Wrong page disposition. Current: ' . $this->page . ', total: ' . $this->pages, __FILE__);
             return;
         }

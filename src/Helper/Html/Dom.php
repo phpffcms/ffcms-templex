@@ -62,7 +62,7 @@ class Dom
         'class', 'id', 'style', 'border',
         'href', 'src', 'link',
         'rel', 'title', 'alt',
-        'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for',
+        'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for', 'enctype',
         'data-toggle', 'data-target', 'data-dismiss',
         'aria-controls', 'aria-expanded', 'aria-label', 'aria-hidden',
         'role'
