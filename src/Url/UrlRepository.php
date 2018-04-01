@@ -70,6 +70,9 @@ class UrlRepository
     {
         $this->parse = parse_url($this->current);
         $this->root = $this->parse['scheme'] . '://' . $this->parse['host'];
+        if (!in_array($this->parse['port'], [80, 443])) {
+            $this->root .= ':' . $this->parse['port'];
+        }
         if ($this->subdir) {
             $this->root .= '/' . $this->subdir;
         }
