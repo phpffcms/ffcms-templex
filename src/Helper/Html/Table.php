@@ -31,13 +31,13 @@ class Table implements ExtensionInterface
 
     /**
      * Factory method. Get instance object for new table
-     * @param array|null $p
+     * @param array|null $properties
      * @return Table
      */
-    public static function factory(array $p = null): Table
+    public static function factory(?array $properties = null): Table
     {
         $instance = new self();
-        $instance->tableProperties = $p;
+        $instance->tableProperties = $properties;
         $instance->tbody = new Tbody();
         $instance->thead = new Thead();
         return $instance;
@@ -55,11 +55,11 @@ class Table implements ExtensionInterface
 
     /**
      * Build thead section
-     * @param array|null $properties
      * @param $items
+     * @param array|null $properties
      * @return Table
      */
-    public function head(?array $properties = null, $items): Table
+    public function head($items, ?array $properties = null): Table
     {
         // sounds like closure? execute it and get result )
         if (is_callable($items)) {
@@ -86,11 +86,11 @@ class Table implements ExtensionInterface
 
     /**
      * Build tbody section
-     * @param array|null $properties
      * @param array|\Closure $items
+     * @param array|null $properties
      * @return Table
      */
-    public function body(?array $properties = null, $items): Table
+    public function body($items, ?array $properties = null): Table
     {
         if (is_callable($items)) {
             $items = $items();

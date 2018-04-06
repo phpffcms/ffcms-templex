@@ -52,12 +52,12 @@ $table = $this->table(['class' => 'table table-hover']);
 $table->selectize(0, 'inputTable1');
 $table->sortable([0 => 'idsort']);
 
-$table->head(['class' => 'thead-control'], [
+$table->head([
    ['text' => 'head1'],
    ['text' => 'head2'],
    ['text' => 'head3'],
    ['text' => 'head4'],
-]);
+], ['class' => 'thead-control']);
 for ($i = 0; $i <= 10; $i++) {
     $row = [];
     for ($j = 0; $j <= 3; $j++) {
@@ -79,7 +79,7 @@ echo $table->display();
             $heads[] = ['text' => 'col ' . $i];
         }
         return $heads;
-    })->body(['class' => 'table-body'], function(){
+    })->body(function(){
         $body = [];
         for ($i = 0; $i <= 10; $i++) { // cols
             for ($j = 0; $j <= 5; $j++) { // rows
@@ -88,7 +88,7 @@ echo $table->display();
         }
 
         return $body;
-    })->display();
+    }, ['class' => 'table-body'])->display();
 ?>
 </div>
 

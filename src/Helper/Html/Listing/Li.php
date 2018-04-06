@@ -97,13 +97,16 @@ class Li
         $text = $this->context['text'];
 
         // build output html code
-        return (new Dom())->li(function() use ($items, $text){
+        return (new Dom())->li(function() use ($items, $text) {
             if (!isset($this->properties['anchor']['id'])) {
                 $this->properties['anchor']['id'] = 'auto-dropdown-' . mt_rand(0, 1000000);
             }
             // build link anchor with text & dropdown id
             $html = (new Dom())->a(function() use ($text) {
-                return htmlentities($text, null, 'UTF-8');
+                if (!$this->properties['html']) {
+                    $text = htmlentities($text, null, 'UTF-8');
+                }
+                return $text;
             }, $this->properties['anchor']);
             // build dropdown div construction
             $html .= (new Dom())->div(function() use ($items){
@@ -117,8 +120,11 @@ class Li
                     $text = $item['text'];
                     unset($item['link'], $item['text']);
                     $item['href'] = $link;
-                    $output .= (new Dom())->a(function() use ($text){
-                        return htmlentities($text, null, 'UTF-8');
+                    $output .= (new Dom())->a(function() use ($text, $item) {
+                        if (!$item['html']) {
+                            $text = htmlentities($text, null, 'UTF-8');
+                        }
+                        return $text;
                     }, $item);
                 }
 
