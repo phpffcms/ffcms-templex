@@ -33,4 +33,10 @@ interface ModelInterface
      * @return array|null
      */
     public function getBadAttributes(): ?array;
+
+    /**
+     * Get form submit method: get,post,null
+     * @return null|string
+     */
+    public function getSubmitMethod(): ?string;
 }
