@@ -74,7 +74,7 @@ class UrlRepository
             $this->root .= ':' . $this->parse['port'];
         }
         if ($this->subdir) {
-            $this->root .= '/' . $this->subdir;
+            $this->root .= '/' . trim($this->subdir, '/');
         }
     }
 

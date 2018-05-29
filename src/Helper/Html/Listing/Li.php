@@ -40,7 +40,7 @@ class Li
                 $this->html = null; // @todo!!!
             } elseif (isset($this->context['dropdown']) && isset($this->context['text'])) {
                 // dropdown bootstrap implementation
-                $this->html = $this->buildDropdownItem();
+                $this->html = $this->buildDivDropdownItem();
             }
         } else {
             $this->html = $this->buildTextItem();
@@ -84,10 +84,10 @@ class Li
     }
 
     /**
-     * Build html code for dropdown elements as li>a div [a]
+     * Build html code for dropdown div->a elements as li>a div [a]
      * @return null|string
      */
-    private function buildDropdownItem(): ?string
+    private function buildDivDropdownItem(): ?string
     {
         if (!is_array($this->context['dropdown']) || count($this->context['dropdown']) < 1) {
             return null;
@@ -99,7 +99,7 @@ class Li
         // build output html code
         return (new Dom())->li(function() use ($items, $text) {
             if (!isset($this->properties['anchor']['id'])) {
-                $this->properties['anchor']['id'] = 'auto-dropdown-' . mt_rand(0, 1000000);
+                $this->properties['anchor']['id'] = 'auto-dropdown-div-' . mt_rand(0, 1000000);
             }
             // build link anchor with text & dropdown id
             $html = (new Dom())->a(function() use ($text) {

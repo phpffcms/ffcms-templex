@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Table;
 
+use Ffcms\Core\Helper\Type\Any;
 use Ffcms\Templex\Helper\Html\Dom;
 
 /**
@@ -63,6 +64,10 @@ class Thead implements RenderElement
      */
     public function html(): ?string
     {
+        if (!$this->items || Any::isArray($this->items) || count($this->items) < 1) {
+            return null;
+        }
+
         $dom = new Dom();
         return $dom->thead(function () use ($dom) { // make <thead></thead> section
             return $dom->tr(function () use ($dom) { // make <tr></tr> section inside <thead>

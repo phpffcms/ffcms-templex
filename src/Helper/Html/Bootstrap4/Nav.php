@@ -103,10 +103,11 @@ class Nav extends Listing
     public function display(): ?string
     {
         $html = parent::display();
-        $html .= (new Dom())->div(function(){
-            return $this->tabContent;
-        }, ['class' => 'tab-content', 'id' => $this->id . '-tabContent']);
-
+        if ($this->tabIndex > 0) {
+            $html .= (new Dom())->div(function () {
+                return $this->tabContent;
+            }, ['class' => 'tab-content', 'id' => $this->id . '-tabContent']);
+        }
         return $html;
     }
 }
