@@ -39,7 +39,7 @@ class Submit implements ButtonInterface
         $properties['name'] = $this->model->getFormName() . '[submit]';
         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
 
-        return $this->engine->render('form/button/submit', [
+        return $this->engine->render('_form/button/submit', [
             'text' => $text,
             'properties' => $properties
         ]);

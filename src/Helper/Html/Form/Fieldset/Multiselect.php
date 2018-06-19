@@ -31,7 +31,7 @@ class Multiselect extends StandardFieldset
     public function html(?array $properties = null, ?string $helper = null): ?string
     {
         $labelProperties = $properties['labelProperties'] ?? null;
-        return $this->engine->render('form/fieldset/multiselect', [
+        return $this->engine->render('_form/fieldset/multiselect', [
             'properties' => $properties,
             'label' => $this->model->getLabel($this->fieldName),
             'helper' => $helper,

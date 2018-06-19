@@ -75,7 +75,7 @@ class Nav extends Listing
                 // build tab content html code
                 $this->tabContent .= (new Dom())->div(function() use ($context){
                     return $context['tab'];
-                }, ['class' => 'tab-pane fade', 'id' => $this->id . '-' . $this->tabIndex, 'role' => 'tabpanel']);
+                }, ['class' => 'tab-pane ' . (!$this->tabContent ? 'active show' : 'fade'), 'id' => $this->id . '-' . $this->tabIndex, 'role' => 'tabpanel']);
 
                 $this->tabIndex++;
             } else {
@@ -88,6 +88,9 @@ class Nav extends Listing
             }
             if (!isset($context['linkProperties']['class'])) {
                 $context['linkProperties']['class'] = 'nav-link';
+                if (!$this->li) {
+                    $context['linkProperties']['class'] .= ' active';
+                }
             }
 
             $this->li[] = new Listing\Li($context, $properties);

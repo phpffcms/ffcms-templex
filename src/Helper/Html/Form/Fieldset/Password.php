@@ -29,7 +29,7 @@ class Password extends StandardFieldset
     public function html(?array $properties = null, ?string $helper = null): ?string
     {
         $labelProperties = $properties['labelProperties'] ?? null;
-        return $this->engine->render('form/fieldset/password', [
+        return $this->engine->render('_form/fieldset/password', [
             'properties' => $properties,
             'label' => $this->model->getLabel($this->fieldName),
             'helper' => $helper,
