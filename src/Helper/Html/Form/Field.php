@@ -5,7 +5,6 @@ namespace Ffcms\Templex\Helper\Html\Form;
 use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Form\Field\FieldInterface;
 
-
 /**
  * Class Field. Build form fields
  * @package Ffcms\Templex\Helper\Html\Form
@@ -18,6 +17,7 @@ use Ffcms\Templex\Helper\Html\Form\Field\FieldInterface;
  * @method file(string $name, ?array $properties = null)
  * @method boolean(string $name, ?array $properties = null)
  * @method checkboxes(string $name, ?array $properties = null)
+ * @method radio(string $name, ?array $properties = null)
  */
 class Field
 {

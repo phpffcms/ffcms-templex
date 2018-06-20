@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex;
 
-
 /**
  * Class Registry. Config and instance registry
  * @package Ffcms\Templex
@@ -41,5 +40,4 @@ class Registry
     {
         return isset(self::$vars[$key]);
     }
-
 }

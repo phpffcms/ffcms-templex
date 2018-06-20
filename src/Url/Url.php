@@ -1,6 +1,7 @@
 <?php
 
 namespace Ffcms\Templex\Url;
+
 use Ffcms\Templex\Helper\Html\Dom;
 
 /**
@@ -104,7 +105,7 @@ class Url
     public static function a(array $item, string $text, ?array $properties = null): ?string
     {
         $properties['href'] = self::link($item);
-        return (new Dom())->a(function() use ($text, $properties){
+        return (new Dom())->a(function () use ($text, $properties) {
             if (!$properties['html']) {
                 $text = htmlspecialchars($text, null, 'UTF-8');
             }

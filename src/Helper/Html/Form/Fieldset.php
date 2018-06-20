@@ -17,6 +17,7 @@ use Ffcms\Templex\Helper\Html\Form\Fieldset\FieldsetInterface;
  * @method file(string $name, ?array $properties = null, ?string $helper = null)
  * @method boolean(string $name, ?array $properties = null, ?string $helper = null)
  * @method checkboxes(string $name, ?array $properties = null, ?string $helper = null)
+ * @method radio(string $name, ?array $properties = null, ?string $helper = null)
  */
 class Fieldset
 {

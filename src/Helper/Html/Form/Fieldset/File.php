@@ -4,7 +4,6 @@ namespace Ffcms\Templex\Helper\Html\Form\Fieldset;
 
 use Ffcms\Templex\Helper\Html\Form\Field\File as FileField;
 
-
 /**
  * Class File. Input type=file implementation
  * @package Ffcms\Templex\Helper\Html\Form\Field

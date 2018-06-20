@@ -71,7 +71,7 @@ class Li
 
             return (new Dom())->a(function () use ($url) { // <a href="">{val}</a> container inside <li>
                 $text = $this->context['text'];
-                if (is_callable($text)) {
+                if (is_callable($text) && !is_string($text)) {
                     $text = $text();
                 }
                 if (!$this->context['html']) {
@@ -97,19 +97,19 @@ class Li
         $text = $this->context['text'];
 
         // build output html code
-        return (new Dom())->li(function() use ($items, $text) {
+        return (new Dom())->li(function () use ($items, $text) {
             if (!isset($this->properties['anchor']['id'])) {
                 $this->properties['anchor']['id'] = 'auto-dropdown-div-' . mt_rand(0, 1000000);
             }
             // build link anchor with text & dropdown id
-            $html = (new Dom())->a(function() use ($text) {
+            $html = (new Dom())->a(function () use ($text) {
                 if (!$this->properties['html']) {
                     $text = htmlentities($text, null, 'UTF-8');
                 }
                 return $text;
             }, $this->properties['anchor']);
             // build dropdown div construction
-            $html .= (new Dom())->div(function() use ($items){
+            $html .= (new Dom())->div(function () use ($items) {
                 $output = null;
                 foreach ($items as $item) {
                     if (!isset($item['text']) || !isset($item['link'])) {
@@ -120,7 +120,7 @@ class Li
                     $text = $item['text'];
                     unset($item['link'], $item['text']);
                     $item['href'] = $link;
-                    $output .= (new Dom())->a(function() use ($text, $item) {
+                    $output .= (new Dom())->a(function () use ($text, $item) {
                         if (!$item['html']) {
                             $text = htmlentities($text, null, 'UTF-8');
                         }

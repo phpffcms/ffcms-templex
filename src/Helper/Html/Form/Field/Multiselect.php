@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
-
 use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Dom;
 
@@ -41,7 +40,7 @@ class Multiselect extends StandardField
         }
 
         // render output html code
-        return (new Dom())->select(function() use ($options, $keyOrder) {
+        return (new Dom())->select(function () use ($options, $keyOrder) {
             $opthtml = null;
             foreach ($options as $key => $val) {
                 $optpr = [];
@@ -50,7 +49,7 @@ class Multiselect extends StandardField
                     $optpr['selected'] = null;
                 }
 
-                $opthtml .= (new Dom())->option(function() use ($val) {
+                $opthtml .= (new Dom())->option(function () use ($val) {
                     return htmlentities($val, null, 'UTF-8');
                 }, $optpr);
             }

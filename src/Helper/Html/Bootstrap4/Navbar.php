@@ -1,11 +1,11 @@
 <?php
 
 namespace Ffcms\Templex\Helper\Html\Bootstrap4;
+
 use Ffcms\Templex\Helper\Html\Dom;
 use Ffcms\Templex\Helper\Html\Listing;
 use Ffcms\Templex\Url\Url;
 use Ffcms\Templex\Url\UrlRepository;
-
 
 /**
  * Class Navbar. Build bootstrap navbar
@@ -107,7 +107,7 @@ class Navbar
         }
 
         // build navbar output html
-        return (new Dom())->nav(function(){
+        return (new Dom())->nav(function () {
             $html = null;
             // compile brand if exist
             if ($this->brand && isset($this->brand['text'])) {
@@ -116,7 +116,7 @@ class Navbar
                 }
                 // build brand url if defined
                 $link = Url::link($this->brand['link']);
-                $html .= (new Dom())->a(function(){
+                $html .= (new Dom())->a(function () {
                     return htmlentities($this->brand['text'], null, 'UTF-8');
                 }, ['href' => $link, 'class' => 'navbar-brand']);
             }
@@ -124,13 +124,13 @@ class Navbar
             $html .= $this->buildToggleButton();
 
             // add navbar menus
-            $html .= (new Dom())->div(function(){
+            $html .= (new Dom())->div(function () {
                 return $this->buildListing('left') . $this->buildListing('right');
             }, ['class' => 'collapse navbar-collapse', 'id' => $this->id]);
 
             // check if container <div> should be implemented
             if ($this->container) {
-                $html = (new Dom())->div(function() use ($html){
+                $html = (new Dom())->div(function () use ($html) {
                     return $html;
                 }, ['class' => 'container']);
             }
@@ -145,7 +145,7 @@ class Navbar
      */
     private function buildToggleButton(): ?string
     {
-        return (new Dom())->button(function(){
+        return (new Dom())->button(function () {
             return (new Dom())->span(['class' => 'navbar-toggler-icon']);
         }, ['class' => 'navbar-toggler',
             'type' => 'button',
@@ -217,5 +217,4 @@ class Navbar
     {
         return $this->display();
     }
-
 }

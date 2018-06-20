@@ -62,7 +62,7 @@ class Table implements ExtensionInterface
     public function head($items, ?array $properties = null): Table
     {
         // sounds like closure? execute it and get result )
-        if (is_callable($items)) {
+        if (is_callable($items) && !is_string($items)) {
             $items = $items();
         }
 
@@ -92,7 +92,7 @@ class Table implements ExtensionInterface
      */
     public function body($items, ?array $properties = null): Table
     {
-        if (is_callable($items)) {
+        if (is_callable($items) && !is_string($items)) {
             $items = $items();
         }
 

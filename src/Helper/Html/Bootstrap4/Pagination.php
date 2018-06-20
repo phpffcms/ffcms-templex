@@ -51,7 +51,7 @@ class Pagination extends NativePagination
     public function display(): ?string
     {
         $html = parent::display();
-        return (new Dom())->nav(function() use ($html){
+        return (new Dom())->nav(function () use ($html) {
             return $html;
         }, ['aria-label' => 'pagination']);
     }

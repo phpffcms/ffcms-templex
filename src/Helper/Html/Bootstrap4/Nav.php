@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html\Bootstrap4;
 
-
 use Ffcms\Templex\Helper\Html\Dom;
 use Ffcms\Templex\Helper\Html\Listing;
 use League\Plates\Engine;
@@ -54,7 +53,7 @@ class Nav extends Listing
      */
     public function menu($context, ?array $properties = null): self
     {
-        if (is_callable($context)) {
+        if (is_callable($context) && !is_string($context)) {
             $context = $context();
         }
 
@@ -69,11 +68,11 @@ class Nav extends Listing
                 $context['linkProperties']['data-toggle'] = 'tab';
                 $context['linkProperties']['role'] = 'tab';
 
-                if (is_callable($context['tab'])) {
+                if (is_callable($context['tab']) && !is_string($context['tab'])) {
                     $context['tab'] = $context['tab']();
                 }
                 // build tab content html code
-                $this->tabContent .= (new Dom())->div(function() use ($context){
+                $this->tabContent .= (new Dom())->div(function () use ($context) {
                     return $context['tab'];
                 }, ['class' => 'tab-pane ' . (!$this->tabContent ? 'active show' : 'fade'), 'id' => $this->id . '-' . $this->tabIndex, 'role' => 'tabpanel']);
 

@@ -52,7 +52,7 @@ class Listing implements ExtensionInterface
      */
     public function li($context, ?array $properties = null): self
     {
-        if (is_callable($context)) {
+        if (is_callable($context) && !is_string($context)) {
             $context = $context();
         }
 

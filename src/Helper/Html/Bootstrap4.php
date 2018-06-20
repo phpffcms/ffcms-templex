@@ -2,7 +2,6 @@
 
 namespace Ffcms\Templex\Helper\Html;
 
-
 use Ffcms\Templex\Helper\Html\Bootstrap4\Nav;
 use Ffcms\Templex\Helper\Html\Bootstrap4\Navbar;
 use League\Plates\Engine;
@@ -67,13 +66,15 @@ class Bootstrap4 implements ExtensionInterface
             return null;
         }
 
-        return (new Dom())->div(function() use ($text, $html) {
+        return (new Dom())->div(function () use ($text, $html) {
             if (!$html) {
                 $text = htmlspecialchars($text, null, 'UTF-8');
             }
             // add "dismiss" icon with javascript close features
-            $text .= (new Dom())->button(function(){
-                return (new Dom())->span(function(){ return "&times;"; }, ['aria-hidden' => 'true']);
+            $text .= (new Dom())->button(function () {
+                return (new Dom())->span(function () {
+                    return "&times;";
+                }, ['aria-hidden' => 'true']);
             }, ['type' => 'button', 'class' => 'close', 'data-dismiss' => 'alert', 'aria-label' => 'Close']);
             return $text;
         }, ['class' => 'alert alert-' . $type . ' alert-dismissible fade show', 'role' => 'alert']);
@@ -91,9 +92,9 @@ class Bootstrap4 implements ExtensionInterface
             return null;
         }
 
-        return (new Dom())->span(function() use ($text) {
+        return (new Dom())->span(function () use ($text) {
             return htmlspecialchars($text, null, 'UTF-8');
-        },['class' => 'badge badge-' . $type]);
+        }, ['class' => 'badge badge-' . $type]);
     }
 
     /**
@@ -112,7 +113,7 @@ class Bootstrap4 implements ExtensionInterface
 
         if ($type === 'button') {
             $properties['type'] = 'button';
-        } else if ($type === 'input') {
+        } elseif ($type === 'input') {
             $properties['value'] = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
             if (!isset($properties['type'])) {
                 $properties['type'] = 'submit';
@@ -120,7 +121,7 @@ class Bootstrap4 implements ExtensionInterface
         }
 
         $properties['class'] = 'btn ' . $properties['class'];
-        return (new Dom())->{$type}(function() use ($text, $type, $properties) {
+        return (new Dom())->{$type}(function () use ($text, $type, $properties) {
             if ($type === 'input') {
                 return null;
             }
@@ -151,5 +152,4 @@ class Bootstrap4 implements ExtensionInterface
     {
         return Bootstrap4\Pagination::factory($url, $properties, $liProperties, $aProperties);
     }
-
 }

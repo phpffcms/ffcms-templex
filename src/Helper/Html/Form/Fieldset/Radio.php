@@ -2,22 +2,19 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Fieldset;
 
-use Ffcms\Templex\Helper\Html\Form\Field\Checkboxes as CheckboxesField;
+use Ffcms\Templex\Helper\Html\Form\Field\Radio as RadioField;
 
 /**
- * Class Checkboxes. Multiple checkboxes implementation
- * @package Ffcms\Templex\Helper\Html\Form\Field
+ * Class Radio. Build radio buttons
+ * @package Ffcms\Templex\Html\Form\Fieldset
  */
-class Checkboxes extends StandardFieldset
+class Radio extends StandardFieldset
 {
     private $field;
 
-    /**
-     * Init dependency injection on field
-     */
     public function before()
     {
-        $this->field = new CheckboxesField($this->model, $this->fieldName);
+        $this->field = new RadioField($this->model, $this->fieldName);
     }
 
     /**
@@ -29,7 +26,7 @@ class Checkboxes extends StandardFieldset
     public function html(?array $properties = null, ?string $helper = null): ?string
     {
         $labelProperties = $properties['labelProperties'] ?? null;
-        return $this->engine->render('_form/fieldset/checkboxes', [
+        return $this->engine->render('_form/fieldset/radio', [
             'properties' => $properties,
             'label' => $this->model->getLabel($this->fieldName),
             'helper' => $helper,

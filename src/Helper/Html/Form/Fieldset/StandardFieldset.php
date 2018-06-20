@@ -31,5 +31,7 @@ abstract class StandardFieldset implements FieldsetInterface
     }
 
     // before method to prevent override __construct
-    protected function before(){}
+    protected function before()
+    {
+    }
 }

@@ -4,7 +4,6 @@ namespace Ffcms\Templex\Helper\Html\Form\Field;
 
 use Ffcms\Templex\Helper\Html\Dom;
 
-
 /**
  * Class Password
  * @package Ffcms\Templex\Helper\Html\Form\Field
