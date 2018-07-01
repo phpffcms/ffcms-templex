@@ -64,7 +64,7 @@ class Thead implements RenderElement
      */
     public function html(): ?string
     {
-        if (!$this->items || Any::isArray($this->items) || count($this->items) < 1) {
+        if (!$this->items || !Any::isArray($this->items) || count($this->items) < 1) {
             return null;
         }
 

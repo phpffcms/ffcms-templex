@@ -10,6 +10,7 @@ use League\Plates\Engine;
  * Class Button
  * @package Ffcms\Templex\Helper\Html\Form
  * @method submit(string $text, ?array $properties = null)
+ * @method cancel(string $text, ?array $properties = null)
  */
 class Button
 {
