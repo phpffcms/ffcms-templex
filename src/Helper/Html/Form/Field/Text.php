@@ -34,6 +34,7 @@ class Text extends StandardField
         if (!isset($properties['id'])) {
             $properties['id'] = $this->getUniqueFieldId();
         }
+
         // build dom html <input properties value="" />
         return (new Dom())->input($properties);
     }

@@ -59,13 +59,14 @@ class Dom
 
     // allowed tag attributes
     public static $attributes = [
-        'class', 'id', 'style', 'border',
-        'href', 'src', 'link',
-        'rel', 'title', 'alt',
-        'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for', 'enctype',
-        'data-toggle', 'data-target', 'data-dismiss',
-        'aria-controls', 'aria-expanded', 'aria-label', 'aria-hidden',
-        'role'
+        'class', 'id', 'style', 'border', // div/table/etc
+        'href', 'src', 'link', // links
+        'rel', 'title', 'alt', // links
+        'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for', 'enctype', // forms
+        'disabled', 'readonly', // forms
+        'data-toggle', 'data-target', 'data-dismiss', // data-*
+        'aria-controls', 'aria-expanded', 'aria-label', 'aria-hidden', // area-*
+        'role' // etc
     ];
 
     // private variables storage

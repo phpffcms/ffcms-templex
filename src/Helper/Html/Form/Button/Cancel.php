@@ -37,6 +37,10 @@ class Cancel implements ButtonInterface
         $link = $properties['link'];
         unset($properties['link']);
 
+        if (!$link || !is_array($link)) {
+            return null;
+        }
+
         return $this->engine->render('_form/button/cancel', [
             'text' => $text,
             'link' => $link,
