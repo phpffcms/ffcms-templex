@@ -87,9 +87,6 @@ class Nav extends Listing
             }
             if (!isset($context['linkProperties']['class'])) {
                 $context['linkProperties']['class'] = 'nav-link';
-                if (!$this->li) {
-                    $context['linkProperties']['class'] .= ' active';
-                }
             }
 
             $this->li[] = new Listing\Li($context, $properties);
