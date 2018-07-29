@@ -40,7 +40,7 @@ class Select extends StandardField
             foreach ($options as $key => $val) {
                 $optpr = [];
                 $optpr['value'] = ($keyOrder ? $key : $val);
-                if ((string)$optpr['value'] === $this->value) {
+                if ((string)$optpr['value'] === (string)$this->value && (string)$this->value !== '') {
                     $optpr['selected'] = null;
                 }
 
