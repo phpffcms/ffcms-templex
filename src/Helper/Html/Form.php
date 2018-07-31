@@ -78,7 +78,7 @@ class Form implements ExtensionInterface
             $this->properties['method'] = $this->model->getSubmitMethod() ?? 'POST';
         }
         // render form template
-        return static::$engine->render('_form/start', [
+        return static::$engine->render('_core/form/start', [
             'properties' => $this->properties,
             'csrfField' => ($csrf ? $this->field()->hidden('_csrf_token', ['value' => $this->model->_csrf_token]) : null),
         ]);
@@ -91,7 +91,7 @@ class Form implements ExtensionInterface
      */
     public function stop($validator = true): string
     {
-        return static::$engine->render('_form/stop', [
+        return static::$engine->render('_core/form/stop', [
             'validator' => $validator,
             'model' => $this->model
         ]);

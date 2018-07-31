@@ -5,6 +5,7 @@ namespace Ffcms\Templex;
 use Ffcms\Core\Helper\FileSystem\Directory;
 use Ffcms\Templex\Helper\Html\Bootstrap4;
 use Ffcms\Templex\Helper\Html\Form;
+use Ffcms\Templex\Helper\Html\Javascript;
 use Ffcms\Templex\Helper\Html\Listing;
 use Ffcms\Templex\Helper\Html\Pagination;
 use Ffcms\Templex\Helper\Html\Table;
@@ -36,7 +37,8 @@ class Engine extends \League\Plates\Engine
             new Table(),
             new Pagination(),
             new Form(),
-            new Bootstrap4()
+            new Bootstrap4(),
+            new Javascript()
         ]);
     }
 

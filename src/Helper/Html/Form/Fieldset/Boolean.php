@@ -31,7 +31,7 @@ class Boolean extends StandardFieldset
     {
         $labelProperties = $properties['labelProperties'] ?? null;
         // render output html from template
-        return $this->engine->render('_form/fieldset/boolean', [
+        return $this->engine->render('_core/form/fieldset/boolean', [
             'properties' => $properties,
             'label' => $this->model->getLabel($this->fieldName),
             'helper' => $helper,

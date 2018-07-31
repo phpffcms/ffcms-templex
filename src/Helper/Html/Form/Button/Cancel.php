@@ -41,7 +41,7 @@ class Cancel implements ButtonInterface
             return null;
         }
 
-        return $this->engine->render('_form/button/cancel', [
+        return $this->engine->render('_core/form/button/cancel', [
             'text' => $text,
             'link' => $link,
             'properties' => $properties
