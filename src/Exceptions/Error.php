@@ -8,7 +8,7 @@ namespace Ffcms\Templex\Exceptions;
  */
 class Error
 {
-    private static $logs;
+    private static $logs = [];
 
     /**
      * Add log message by file

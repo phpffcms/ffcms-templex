@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Table;
 
+use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Dom;
 
 /**
@@ -80,13 +81,15 @@ class Tbody implements RenderElement
                 $tr .= $dom->tr(function () use ($dom, $row) { // build <tr></tr> section in <tbody>
                     $td = null;
                     foreach ($row as $order => $column) {
+                        // do not process shitty-formatted rows or key-based properties
+                        if (!is_int($order)) {
+                            Error::add('Table row is wrong by key: ' . $order, __LINE__);
+                            continue;
+                        }
                         // do not process empty rows
                         if (!isset($column['text'])) {
+                            Error::add('Table row have no "text" property in order: ' . $order, __LINE__);
                             return null;
-                        }
-
-                        if (!is_int($order)) { // do not process shitty-formatted rows
-                            continue;
                         }
 
                         $td .= $dom->td(function () use ($order, $column) { // build <td><td> tags inside <tr> section
