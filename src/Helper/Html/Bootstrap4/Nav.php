@@ -16,6 +16,7 @@ class Nav extends Listing
     private $tabIndex = 0;
 
     private $tabContent;
+    private $tabActiveExist = false;
 
     /**
      * Initialize nav instance
@@ -57,12 +58,19 @@ class Nav extends Listing
             $context = $context();
         }
 
+        $isActive = false;
         if (is_array($context)) {
             // process tab properties
             if (isset($context['tab'])) {
                 $this->properties['role'] = 'tablist';
                 $this->properties['id'] = $this->id . '-tab';
                 $context['link'] = ['#' . $this->id . '-' . $this->tabIndex];
+
+                if (isset($context['tabActive']) && $context['tabActive'] && !$this->tabActiveExist) {
+                    $isActive = true;
+                    $this->tabActiveExist = true;
+                    unset($context['tabActive']);
+                }
 
                 $context['linkProperties']['id'] = $this->id . '-' . $this->tabIndex . '-tab';
                 $context['linkProperties']['data-toggle'] = 'tab';
@@ -74,7 +82,7 @@ class Nav extends Listing
                 // build tab content html code
                 $this->tabContent .= (new Dom())->div(function () use ($context) {
                     return $context['tab'];
-                }, ['class' => 'tab-pane ' . (!$this->tabContent ? 'active show' : 'fade'), 'id' => $this->id . '-' . $this->tabIndex, 'role' => 'tabpanel']);
+                }, ['class' => 'tab-pane ' . ($isActive ? 'active show' : 'fade'), 'id' => $this->id . '-' . $this->tabIndex, 'role' => 'tabpanel']);
 
                 $this->tabIndex++;
             } else {
@@ -87,6 +95,9 @@ class Nav extends Listing
             }
             if (!isset($context['linkProperties']['class'])) {
                 $context['linkProperties']['class'] = 'nav-link';
+            }
+            if ($isActive) {
+                $context['linkProperties']['class'] .= ' active';
             }
 
             $this->li[] = new Listing\Li($context, $properties);

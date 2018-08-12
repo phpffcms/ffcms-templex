@@ -35,7 +35,7 @@ abstract class Model implements ModelInterface
         $text = null;
 
         // check if dot notation used for array items
-        if (strpos('.', $name)) {
+        if (strpos($name, '.')) {
             if (!isset($labels[$name])) {
                 $text = (string)$labels[strtok($name, '.')];
             } else {

@@ -137,7 +137,7 @@ echo $form->stop();
 <?= $this->bootstrap()->nav('ul', ['class' => 'nav-tabs'])
     ->menu(['text' => 'Menu #1', 'link' => ['action/test']], ['class' => 'nav-item'])
     ->menu(['text' => 'Menu #2', 'link' => ['action/tesk2']])
-    ->menu(['text' => 'Tab 1', 'tab' => 'Lol kek tabcontent'])
+    ->menu(['text' => 'Tab 1', 'tab' => 'Lol kek tabcontent', 'tabActive' => true])
     ->menu(['text' => 'Tab 2', 'tab' => function(){
         return '<div>Some strong content body in anonymous function</div>';
     }])->display() ?>
