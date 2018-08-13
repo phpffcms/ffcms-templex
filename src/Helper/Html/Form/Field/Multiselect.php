@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Form\Field;
 
+use Ffcms\Core\Helper\Type\Any;
 use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Dom;
 
@@ -45,7 +46,7 @@ class Multiselect extends StandardField
             foreach ($options as $key => $val) {
                 $optpr = [];
                 $optpr['value'] = ($keyOrder ? $key : $val);
-                if (in_array($optpr['value'], $this->value)) {
+                if (Any::isArray($this->value) && in_array($optpr['value'], $this->value)) {
                     $optpr['selected'] = null;
                 }
 

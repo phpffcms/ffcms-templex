@@ -63,7 +63,7 @@ class Dom
         'href', 'src', 'link', // links
         'rel', 'title', 'alt', // links
         'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for', 'enctype', // forms
-        'disabled', 'readonly', // forms
+        'disabled', 'readonly', 'multiple', 'rows', // forms
         'data-toggle', 'data-target', 'data-dismiss', // data-*
         'aria-controls', 'aria-expanded', 'aria-label', 'aria-hidden', // area-*
         'role' // etc
