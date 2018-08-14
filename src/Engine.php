@@ -3,6 +3,7 @@
 namespace Ffcms\Templex;
 
 use Ffcms\Core\Helper\FileSystem\Directory;
+use Ffcms\Templex\Exceptions\Error;
 use Ffcms\Templex\Helper\Html\Bootstrap4;
 use Ffcms\Templex\Helper\Html\Form;
 use Ffcms\Templex\Helper\Html\Javascript;
@@ -58,7 +59,11 @@ class Engine extends \League\Plates\Engine
                 // try to use fallback directory if exception catched
                 $currentDir = parent::getDirectory();
                 parent::setDirectory($fallbackDir);
-                $render = parent::render($name, $data);
+                try {
+                    $render = parent::render($name, $data);
+                } catch (\Exception $e) {
+                    Error::add($e->getMessage(), __FILE__);
+                }
                 parent::setDirectory($currentDir);
             }
         }
