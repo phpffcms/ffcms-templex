@@ -18,6 +18,9 @@ use Ffcms\Templex\Template\Template;
  */
 class Engine extends \League\Plates\Engine
 {
+
+    private $defaultDirectory;
+
     /**
      * Override template instance builder
      * @param string $name
@@ -41,6 +44,8 @@ class Engine extends \League\Plates\Engine
             new Bootstrap4(),
             new Javascript()
         ]);
+        // save default directory for fallback override
+        $this->defaultDirectory = $this->getDirectory();
     }
 
     /**
@@ -57,15 +62,20 @@ class Engine extends \League\Plates\Engine
         } catch (\Exception $e) {
             if ($fallbackDir && Directory::exist($fallbackDir)) {
                 // try to use fallback directory if exception catched
-                $currentDir = parent::getDirectory();
-                parent::setDirectory($fallbackDir);
+                $currentDir = $this->getDirectory();
+                $this->setDirectory($fallbackDir);
                 try {
                     $render = parent::render($name, $data);
                 } catch (\Exception $e) {
+                    $this->setDirectory($currentDir);
                     Error::add($e->getMessage(), __FILE__);
                 }
-                parent::setDirectory($currentDir);
             }
+        }
+
+        // fix override work directory by fallback dir
+        if ($fallbackDir && $this->getDirectory() === $fallbackDir) {
+            $this->setDirectory($this->defaultDirectory);
         }
 
         return $render;
