@@ -20,7 +20,7 @@ class Hidden extends StandardField
     public function html(?array $properties = null): ?string
     {
         // check if input type=hidden value is defined
-        if (!$this->value || !is_string($this->value) || strlen($this->value) < 1) {
+        if (!$this->value || (!is_string($this->value) && !is_int($this->value) ) || strlen($this->value) < 1) {
             Error::add('Form field error: hidden field may not have empty value: ' . $this->fieldName, __FILE__);
             return null;
         }
