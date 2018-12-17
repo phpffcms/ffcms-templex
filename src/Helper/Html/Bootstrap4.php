@@ -152,4 +152,15 @@ class Bootstrap4 implements ExtensionInterface
     {
         return Bootstrap4\Pagination::factory($url, $properties, $liProperties, $aProperties);
     }
+
+    /**
+     * Build bootstrap button group
+     * @param array|null $properties
+     * @param int $dropdownLimit
+     * @return Bootstrap4\ButtonGroup
+     */
+    public function btngroup(?array $properties = null, int $dropdownLimit = 3)
+    {
+        return Bootstrap4\ButtonGroup::factory($properties, $dropdownLimit);
+    }
 }
