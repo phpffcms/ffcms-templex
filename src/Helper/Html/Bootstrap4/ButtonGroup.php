@@ -112,7 +112,7 @@ class ButtonGroup
             }
 
             // draw dropdown elements if required
-            if ($i > $this->dropdownLimit) {
+            if ($i > $this->dropdownLimit+1) {
                 $html .= (new Dom())->div(function() use ($dropdownHtml) {
                     $html = (new Dom())->button(function() {
                         return "&nbsp;";
