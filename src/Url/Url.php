@@ -2,6 +2,8 @@
 
 namespace Ffcms\Templex\Url;
 
+use Ffcms\Core\App;
+use Ffcms\Core\Helper\Type\Str;
 use Ffcms\Templex\Helper\Html\Dom;
 
 /**
@@ -137,5 +139,33 @@ class Url
         }
 
         return $path;
+    }
+
+    /**
+     * Generate standalone url from uri and config values
+     * @param string $uri
+     * @param string|null $lang
+     * @return string|null
+     */
+    public static function stringUrl(string $uri, ?string $lang = null): ?string
+    {
+        /** @var array $configs */
+        $configs = App::$Properties->getAll('default');
+        $httpHost = $configs['baseProto'] . '://' . $configs['baseDomain'];
+        if ($configs['basePath'] !== '/') {
+            $httpHost .= $configs['basePath'] . '/';
+        }
+
+        // check if is this is URI not URL
+        if (!Str::startsWith($httpHost, $uri)) {
+            // check if lang is defined in URI or define it
+            if ($lang && $configs['multiLanguage'] && !Str::startsWith($lang, $uri)) {
+                $uri = $lang . '/' . ltrim($uri, '/');
+            }
+            // add basic httpHost data
+            $uri = rtrim($httpHost, '/') . '/' . ltrim($uri, '/');
+        }
+
+        return $uri;
     }
 }
