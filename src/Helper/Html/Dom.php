@@ -60,7 +60,7 @@ class Dom
     // allowed tag attributes
     public static $attributes = [
         'class', 'id', 'style', 'border', // div/table/etc
-        'href', 'src', 'link', // links
+        'href', 'src', 'link', 'target', // links
         'rel', 'title', 'alt', // links
         'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for', 'enctype', // forms
         'disabled', 'readonly', 'multiple', 'rows', // forms

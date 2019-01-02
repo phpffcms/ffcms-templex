@@ -104,7 +104,7 @@ class ButtonGroup
             foreach ($this->buttons as $button) {
                 // if dropdown limit overhead - display dropdown menu
                 if ($i > $this->dropdownLimit) {
-                    $dropdownHtml .= Url::a($button['link'], $button['text'], $this->properties['dropdown']['link']);
+                    $dropdownHtml .= Url::a($button['link'], $button['text'], ($this->properties['dropdown']['link'] + $button['properties'])); // merge initialize properties with passed by item
                 } else {
                     $html .= Url::a($button['link'], $button['text'], $button['properties']);
                 }
