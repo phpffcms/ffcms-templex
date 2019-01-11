@@ -16,11 +16,17 @@ class UrlRepository
     private $subdir;
     private $root;
 
+    /**
+     * UrlRepository constructor.
+     */
     public function __construct()
     {
         // if not passed direct - try to get from PHP params
         if (!$this->current) {
-            $this->current = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            $host = $_SERVER['HTTP_HOST'] ?? null;
+            $uri = $_SERVER['REQUEST_URI'] ?? null;
+
+            $this->current = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . "://" . $host . $uri;
         }
 
         $this->prepareRootUrl();
