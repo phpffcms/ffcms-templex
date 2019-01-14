@@ -57,6 +57,7 @@ class Engine extends \League\Plates\Engine
      */
     public function render($name, array $data = array(), $fallbackDir = null)
     {
+        $render = null;
         try {
             $render = parent::render($name, $data);
         } catch (\Exception $e) {
