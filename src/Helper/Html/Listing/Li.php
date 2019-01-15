@@ -63,18 +63,18 @@ class Li
 
         // return element
         return (new Dom())->li(function () use ($url) { // <li><li> container
-            $ahrefProperties = array_merge(['href' => $url], (array)$this->context['linkProperties']);
+            $ahrefProperties = array_merge(['href' => $url], (array)($this->context['linkProperties'] ?? []));
             // check if link seems like current and mark "active"
-            if (is_array($this->context['link']) && $this->isCurrentUrl($this->context['link'], (bool)$this->context['urlEqual'])) {
+            if (isset($this->context['link']) && is_array($this->context['link']) && $this->isCurrentUrl($this->context['link'], (bool)($this->context['urlEqual'] ?? false))) {
                 $ahrefProperties['class'] .= ' ' . $this->context['active']['class'];
             }
 
             return (new Dom())->a(function () use ($url) { // <a href="">{val}</a> container inside <li>
-                $text = $this->context['text'];
+                $text = $this->context['text'] ?? null;
                 if (is_callable($text) && !is_string($text)) {
                     $text = $text();
                 }
-                if (!$this->context['html']) {
+                if (!(bool)($this->context['html'] ?? false)) {
                     $text = htmlentities($text, null, 'UTF-8');
                 }
 
@@ -89,12 +89,12 @@ class Li
      */
     private function buildDivDropdownItem(): ?string
     {
-        if (!is_array($this->context['dropdown']) || count($this->context['dropdown']) < 1) {
+        if (isset($this->context['dropdown']) && !is_array($this->context['dropdown']) || count($this->context['dropdown']) < 1) {
             return null;
         }
         // get dropdown header & items
-        $items = $this->context['dropdown'];
-        $text = $this->context['text'];
+        $items = $this->context['dropdown'] ?? null;
+        $text = $this->context['text'] ?? null;
 
         // build output html code
         return (new Dom())->li(function () use ($items, $text) {
@@ -103,11 +103,11 @@ class Li
             }
             // build link anchor with text & dropdown id
             $html = (new Dom())->a(function () use ($text) {
-                if (!$this->properties['html']) {
+                if (!(bool)($this->properties['html'] ?? false)) {
                     $text = htmlentities($text, null, 'UTF-8');
                 }
                 return $text;
-            }, $this->properties['anchor']);
+            }, ($this->properties['anchor'] ?? null));
             // build dropdown div construction
             $html .= (new Dom())->div(function () use ($items) {
                 $output = null;
@@ -117,7 +117,7 @@ class Li
                     }
                     // build dropdown link in dropdown block
                     $link = Url::link($item['link']);
-                    $text = $item['text'];
+                    $text = $item['text'] ?? null;
                     unset($item['link'], $item['text']);
                     $item['href'] = $link;
                     $output .= (new Dom())->a(function () use ($text, $item) {
@@ -129,7 +129,7 @@ class Li
                 }
 
                 return $output;
-            }, $this->properties['container']);
+            }, ($this->properties['container'] ?? null));
 
 
             return $html;
@@ -156,8 +156,8 @@ class Li
     {
         // build text item dom element
         return (new Dom())->li(function () {
-            $text = $this->context;
-            if (!$this->properties['html']) {
+            $text = $this->context ?? null;
+            if (!(bool)($this->properties['html'] ?? false)) {
                 $text = htmlspecialchars($text, null, 'UTF-8');
             }
 

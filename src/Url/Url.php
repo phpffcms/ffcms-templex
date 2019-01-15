@@ -37,7 +37,8 @@ class Url
      */
     public function isLikeCurrent(?array $url = null): bool
     {
-        if (!$url || !isset($url[0]) || !is_string($url[0])) {
+        $element = new UrlElement($url);
+        if (!$url || !$element->getControllerAction()) {
             return false;
         }
 
@@ -52,13 +53,14 @@ class Url
      * @param array|null $url
      * @return bool
      */
-    public function isEqualCurrent(?array $url = null)
+    public function isEqualCurrent(?array $url = null): bool
     {
-        if (!$url[0] || !is_string($url[0]) || strpos($url[0], '/') === false) {
+        $element = new UrlElement($url);
+        if (!$url || !$element->isValidControllerAction()) {
             return false;
         }
 
-        $targetUrl = self::to($url[0], $url[1], $url[2]);
+        $targetUrl = self::to($element->getControllerAction(), $element->getParams(), $element->getQuery());
 
         return $targetUrl === $this->repository->getCurrent();
     }
@@ -94,7 +96,8 @@ class Url
      */
     public static function link(array $item): ?string
     {
-        return self::to($item[0], $item[1], $item[2]);
+        $element = new UrlElement($item);
+        return self::to($element->getControllerAction(), $element->getParams(), $element->getQuery());
     }
 
     /**
@@ -122,20 +125,21 @@ class Url
      */
     public function buildUrlPath(?array $url = null): ?string
     {
-        if (!$url || !isset($url[0]) || !is_string($url[0])) {
+        $element = new UrlElement($url);
+        if (!$url || !$element->getControllerAction()) {
             return null;
         }
 
-        $path = trim($url[0], '/');
+        $path = trim($element->getControllerAction(), '/');
         // build argument params
-        if (isset($url[1]) && is_array($url[1])) {
-            foreach ($url[1] as $arg) {
+        if ($element->getParams()) {
+            foreach ($element->getParams() as $arg) {
                 $path .= '/' . $arg;
             }
         }
         // build query string
-        if (isset($url[2]) && is_array($url[2])) {
-            $path .= '?' . http_build_query($url[2]);
+        if ($element->getQuery()) {
+            $path .= '?' . http_build_query($element->getQuery());
         }
 
         return $path;

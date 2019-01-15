@@ -75,12 +75,9 @@ class Thead implements RenderElement
                 foreach ($this->items as $order => $item) {
                     $tr .= $dom->th(function () use ($dom, $item, $order) { // make <th></th> items inside <tr> section
                         // parse th text from passed item array value
-                        $text = (string)$item['text'];
-                        if (!$item['html']) {
-                            $flag = ENT_QUOTES; // set escape quotas flag for htmlentities if not defined
-                            if (isset($item['flag'])) {
-                                $flag = $item['flag'];
-                            }
+                        $text = (string)($item['text'] ?? '');
+                        if (!(bool)($item['html'] ?? false)) {
+                            $flag = $item['flag'] ?? ENT_QUOTES; // set escape quotas flag for htmlentities if not defined
                             $text = htmlspecialchars($text, $flag, 'UTF-8');
                         }
 
@@ -95,7 +92,7 @@ class Thead implements RenderElement
                         }
 
                         return $text; // <th>text</th>
-                    }, $item['properties']);
+                    }, ($item['properties'] ?? null));
                 }
                 return $tr;
             });

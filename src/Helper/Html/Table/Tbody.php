@@ -76,7 +76,7 @@ class Tbody implements RenderElement
             ksort($this->items); // sort rows by index
             foreach ($this->items as $row) {
                 ksort($row); // sort columns in row by index
-                $rowProperties = $row['properties'];
+                $rowProperties = $row['properties'] ?? null;
                 unset($row['properties']);
                 $tr .= $dom->tr(function () use ($dom, $row) { // build <tr></tr> section in <tbody>
                     $td = null;
@@ -86,20 +86,17 @@ class Tbody implements RenderElement
                             Error::add('Table row is wrong by key: ' . $order, __LINE__);
                             continue;
                         }
+
+                        $text = $column['text'] ?? null;
                         // do not process empty rows
-                        if (!isset($column['text'])) {
+                        if (!$text) {
                             Error::add('Table row have no "text" property in order: ' . $order, __LINE__);
                             return null;
                         }
 
-                        $td .= $dom->td(function () use ($order, $column) { // build <td><td> tags inside <tr> section
-                            $text = $column['text'];
-                            $flag = ENT_QUOTES;
-                            if (isset($column['flag'])) {
-                                $flag = $column['flag'];
-                            }
-
-                            if (!$column['html']) {
+                        $td .= $dom->td(function () use ($order, $column, $text) { // build <td><td> tags inside <tr> section
+                            $flag = $column['flag'] ?? ENT_QUOTES;
+                            if (!(bool)($column['html'] ?? false)) {
                                 $text = htmlspecialchars($text, $flag, 'UTF-8');
                             }
 
@@ -109,7 +106,7 @@ class Tbody implements RenderElement
                             }
 
                             return $text;
-                        }, $column['properties']);
+                        }, ($column['properties'] ?? null));
                     }
                     return $td;
                 }, $rowProperties);
