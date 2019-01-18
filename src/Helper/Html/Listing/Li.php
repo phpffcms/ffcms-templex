@@ -117,11 +117,11 @@ class Li
                     }
                     // build dropdown link in dropdown block
                     $link = Url::link($item['link']);
-                    $text = $item['text'] ?? null;
+                    $text = $item['text'];
                     unset($item['link'], $item['text']);
                     $item['href'] = $link;
                     $output .= (new Dom())->a(function () use ($text, $item) {
-                        if (!$item['html']) {
+                        if (!(bool)($item['html'] ?? false)) {
                             $text = htmlentities($text, null, 'UTF-8');
                         }
                         return $text;

@@ -36,7 +36,7 @@ class Navbar
         $this->properties = $properties;
         $this->container = $container;
 
-        $this->properties['class'] = 'navbar ' . $this->properties['class'];
+        $this->properties['class'] = 'navbar ' . ($this->properties['class'] ?? null);
     }
 
     /**
@@ -74,8 +74,8 @@ class Navbar
         }
 
         // set default menu class
-        $item['properties']['class'] = 'nav-item ' . $item['properties']['class'];
-        $item['linkProperties']['class'] = 'nav-link ' . $item['linkProperties']['class'];
+        $item['properties']['class'] = 'nav-item ' . ($item['properties']['class'] ?? null);
+        $item['linkProperties']['class'] = 'nav-link ' . ($item['linkProperties']['class'] ?? null);
 
         $this->{$pos}[] = $item;
         return $this;
@@ -171,7 +171,7 @@ class Navbar
         $class = ($pos === 'right' ? 'ml-auto' : 'mr-auto');
         $listing = Listing::factory('ul', ['class' => 'navbar-nav ' . $class]);
         foreach ($this->{$pos} as $item) {
-            if ($item['dropdown']) {
+            if (isset($item['dropdown'])) {
                 $item = $this->prepareDropDown($item);
             }
             $listing->li($item, $item['properties']);
