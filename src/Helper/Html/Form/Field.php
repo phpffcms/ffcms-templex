@@ -64,6 +64,6 @@ class Field
 
         /** @var FieldInterface $field */
         $field = new $callback($this->model, $attr);
-        return $field->html($arguments[1]);
+        return $field->html(($arguments[1] ?? null));
     }
 }

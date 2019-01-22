@@ -74,7 +74,7 @@ class Form implements ExtensionInterface
         $this->properties['id'] = $this->properties['name'];
 
         // check if submit method is defined
-        if (!$this->properties['method']) {
+        if (!isset($this->properties['method'])) {
             $this->properties['method'] = $this->model->getSubmitMethod() ?? 'POST';
         }
         // render form template

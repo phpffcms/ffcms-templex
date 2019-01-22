@@ -47,6 +47,6 @@ class Button
         }
         /** @var ButtonInterface $class */
         $class = new $callback($this->engine, $this->model);
-        return $class->html($arguments[0], $arguments[1]);
+        return $class->html($arguments[0], ($arguments[1] ?? null));
     }
 }

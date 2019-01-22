@@ -68,7 +68,7 @@ class Fieldset
 
         /** @var FieldsetInterface $field */
         $field = new $callback($this->model, $attr, $this->engine);
-        return $field->html($arguments[1], $arguments[2]);
+        return $field->html(($arguments[1] ?? null), ($arguments[2] ?? null));
     }
 
     /**

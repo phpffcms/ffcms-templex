@@ -8,10 +8,10 @@ namespace Ffcms\Templex\Helper\Html\Form;
  */
 abstract class Model implements ModelInterface
 {
-    public $_csrf_token;
     public $_name;
 
     protected $_badAttr;
+    protected $submitMethod;
 
     /**
      * Model constructor.
@@ -37,12 +37,12 @@ abstract class Model implements ModelInterface
         // check if dot notation used for array items
         if (strpos($name, '.')) {
             if (!isset($labels[$name])) {
-                $text = (string)$labels[strtok($name, '.')];
+                $text = (string)($labels[strtok($name, '.')] ?? '');
             } else {
                 $text = (string)$labels[$name];
             }
         } else {
-            $text = (string)$labels[$name];
+            $text = (string)($labels[$name] ?? '');
         }
 
         // if text is still null or empty - display attribute variable name
@@ -65,5 +65,28 @@ abstract class Model implements ModelInterface
     public function getBadAttributes(): ?array
     {
         return $this->_badAttr;
+    }
+
+    /**
+     * Get submit method abstraction
+     * @return string|null
+     */
+    public function getSubmitMethod(): ?string
+    {
+        return $this->submitMethod ?? 'post';
+    }
+
+    /**
+     * Set submit method
+     * @param string $method
+     */
+    public function setSubmitMethod(string $method)
+    {
+        $method = strtolower($method);
+        if (!in_array($method, ['post', 'get'])) {
+            return;
+        }
+
+        $this->submitMethod = $method;
     }
 }
