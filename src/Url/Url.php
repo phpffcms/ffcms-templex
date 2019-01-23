@@ -75,7 +75,15 @@ class Url
     public static function to(string $controllerAction, ?array $arguments = null, ?array $query = null): ?string
     {
         // check if link is looks like anchor (starts with #) or full url (contains protocol://)
-        if ($controllerAction[0] === '#' || strpos($controllerAction, '://') !== false) {
+        //if ($controllerAction[0] === '#' || strpos($controllerAction, '://') !== false) {
+        if ($controllerAction[0] === '#') {
+            return $controllerAction;
+        }
+
+        if (strpos($controllerAction, '://') !== false) {
+            if ($query) {
+                $controllerAction .= '?' . http_build_query($query);
+            }
             return $controllerAction;
         }
 
