@@ -89,7 +89,7 @@ class Tbody implements RenderElement
 
                         $text = $column['text'] ?? null;
                         // do not process empty rows
-                        if (!$text) {
+                        if (!isset($text)) {
                             Error::add('Table row have no "text" property in order: ' . $order, __LINE__);
                             return null;
                         }
