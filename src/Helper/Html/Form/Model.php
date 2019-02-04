@@ -11,7 +11,7 @@ abstract class Model implements ModelInterface
     public $_name;
 
     protected $_badAttr;
-    protected $submitMethod;
+    protected $_submitMethod;
 
     /**
      * Model constructor.
@@ -73,7 +73,7 @@ abstract class Model implements ModelInterface
      */
     public function getSubmitMethod(): ?string
     {
-        return $this->submitMethod ?? 'post';
+        return $this->_submitMethod ?? 'post';
     }
 
     /**
@@ -87,6 +87,6 @@ abstract class Model implements ModelInterface
             return;
         }
 
-        $this->submitMethod = $method;
+        $this->_submitMethod = $method;
     }
 }
