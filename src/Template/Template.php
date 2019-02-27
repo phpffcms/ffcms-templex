@@ -9,6 +9,7 @@ use Ffcms\Templex\Helper\Html\Table;
 use Ffcms\Templex\Helper\Html\Listing;
 use Ffcms\Templex\Helper\Html\Pagination;
 use Ffcms\Templex\Helper\Html\Form;
+use Ffcms\Templex\Engine;
 
 /**
  * Class Template. Extend default template core
@@ -22,5 +23,16 @@ use Ffcms\Templex\Helper\Html\Form;
  */
 class Template extends \League\Plates\Template\Template
 {
-    // @todo: implement some core-native features
+    /**
+     * Template constructor. Override init instances
+     * @param Engine $engine
+     * @param string $name
+     */
+    public function __construct(Engine $engine, string $name)
+    {
+        $this->engine = $engine;
+        $this->name = new Name($engine, $name);
+
+        $this->data($this->engine->getData($name));
+    }
 }

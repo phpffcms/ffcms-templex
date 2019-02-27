@@ -10,6 +10,7 @@ use Ffcms\Templex\Helper\Html\Javascript;
 use Ffcms\Templex\Helper\Html\Listing;
 use Ffcms\Templex\Helper\Html\Pagination;
 use Ffcms\Templex\Helper\Html\Table;
+use Ffcms\Templex\Template\Fallbacks;
 use Ffcms\Templex\Template\Template;
 
 /**
@@ -18,8 +19,39 @@ use Ffcms\Templex\Template\Template;
  */
 class Engine extends \League\Plates\Engine
 {
-
     private $defaultDirectory;
+    protected $fallbacks;
+
+    /**
+     * Engine constructor.
+     * @param string|null $directory
+     * @param string $fileExtension
+     */
+    public function __construct(?string $directory = null, string $fileExtension = 'php')
+    {
+        parent::__construct($directory, $fileExtension);
+        $this->fallbacks = new Fallbacks();
+        $this->fallbacks->add($directory);
+    }
+
+    /**
+     * Add fallback directory
+     * @param string $dir
+     */
+    public function addFallback(string $dir)
+    {
+        $this->fallbacks->add($dir);
+    }
+
+    /**
+     * Get result fallback paths array
+     * @return array
+     */
+    public function getFallback(): array
+    {
+        return $this->fallbacks->get();
+    }
+
 
     /**
      * Override template instance builder
@@ -46,39 +78,5 @@ class Engine extends \League\Plates\Engine
         ]);
         // save default directory for fallback override
         $this->defaultDirectory = $this->getDirectory();
-    }
-
-    /**
-     * Create a new template and render it.
-     * @param string $name
-     * @param array $data
-     * @param null $fallbackDir
-     * @return string
-     */
-    public function render($name, array $data = array(), $fallbackDir = null)
-    {
-        $render = null;
-        try {
-            $render = parent::render($name, $data);
-        } catch (\Exception $e) {
-            if ($fallbackDir && Directory::exist($fallbackDir)) {
-                // try to use fallback directory if exception catched
-                $currentDir = $this->getDirectory();
-                $this->setDirectory($fallbackDir);
-                try {
-                    $render = parent::render($name, $data);
-                } catch (\Exception $e) {
-                    $this->setDirectory($currentDir);
-                    Error::add($e->getMessage(), __FILE__);
-                }
-            }
-        }
-
-        // fix override work directory by fallback dir
-        if ($fallbackDir && $this->getDirectory() === $fallbackDir) {
-            $this->setDirectory($this->defaultDirectory);
-        }
-
-        return $render;
     }
 }
