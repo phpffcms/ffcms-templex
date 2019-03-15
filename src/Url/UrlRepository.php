@@ -55,7 +55,7 @@ class UrlRepository
     public function setUrlAndSubdir(?string $url = null, ?string $subdir = null): void
     {
         if ($url) {
-            $this->url = $url;
+            $this->current = $url;
         }
 
         if ($subdir) {
