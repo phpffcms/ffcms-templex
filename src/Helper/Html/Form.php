@@ -123,4 +123,13 @@ class Form implements ExtensionInterface
     {
         return $this->button;
     }
+
+    /**
+     * Get form model instance
+     * @return ModelInterface
+     */
+    public function model(): ModelInterface
+    {
+        return $this->model;
+    }
 }
