@@ -35,4 +35,15 @@ class Template extends \League\Plates\Template\Template
 
         $this->data($this->engine->getData($name));
     }
+
+    /**
+     * Render template method
+     * @param array $data 
+     * @return string
+     */
+    public function render(array $data = array())
+    {
+        $data['tpl'] = $this;
+        return parent::render($data);
+    }
 }
