@@ -10,17 +10,17 @@
     "html5",
     "bootstrap"
   ],
-  "homepage": "http://ffcms.org",
+  "homepage": "http://pmcore.ru",
   "license": "MIT",
   "authors": [
     {
-      "name": "Pyatinskyi M.M.",
-      "email": "zenn@ffcms.org",
-      "homepage": "http://ffcms.ru"
+      "name": "Piatinskii M.M.",
+      "email": "zenn1989@gmail.com",
+      "homepage": "https://pmcore.ru"
     }
   ],
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2.5",
     "league/plates": "3.*@stable"
   },
   "autoload": {
