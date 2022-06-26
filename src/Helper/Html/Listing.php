@@ -62,7 +62,7 @@ class Listing implements ExtensionInterface
 
     /**
      * Display output html code
-     * @return null|string
+     * @return string
      */
     public function display(): ?string
     {
@@ -80,9 +80,9 @@ class Listing implements ExtensionInterface
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function __toString(): ?string
+    public function __toString(): string
     {
         return $this->display();
     }

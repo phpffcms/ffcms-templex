@@ -54,7 +54,7 @@ class Li
     private function buildLinkItem(): ?string
     {
         // check if active class defined by input or set as default
-        if (!isset($thix->context['active']['class'])) {
+        if (!isset($this->context['active']['class'])) {
             $this->context['active']['class'] = 'active';
         }
 
@@ -178,7 +178,7 @@ class Li
      * Magic __toString call
      * @return null|string
      */
-    public function __toString(): ?string
+    public function __toString(): string
     {
         return $this->html();
     }

@@ -149,7 +149,7 @@ class Navbar
             return (new Dom())->span(['class' => 'navbar-toggler-icon']);
         }, ['class' => 'navbar-toggler',
             'type' => 'button',
-            'data-toggle' => "collapse",
+            'data-bs-toggle' => "collapse",
             'data-target' => '#' . $this->id,
             'aria-controls' => $this->id,
             'aria-expanded' => 'false',
@@ -168,7 +168,7 @@ class Navbar
         if (!property_exists($this, $pos) || !is_array($this->{$pos}) || count($this->{$pos}) < 1) {
             return null;
         }
-        $class = ($pos === 'right' ? 'ml-auto' : 'mr-auto');
+        $class = ($pos === 'right' ? 'ms-auto' : 'me-auto');
         $listing = Listing::factory('ul', ['class' => 'navbar-nav ' . $class]);
         foreach ($this->{$pos} as $item) {
             if (isset($item['dropdown'])) {
@@ -197,7 +197,7 @@ class Navbar
             'class' => 'nav-link dropdown-toggle',
             'href' => '#',
             'id' => $this->id . '-' . $this->dropdownCounter,
-            'data-toggle' => 'dropdown',
+            'data-bs-toggle' => 'dropdown',
             'aria-haspopup' => 'true',
             'aria-expanded' => 'false'
         ];
