@@ -73,7 +73,7 @@ class Nav extends Listing
                 }
 
                 $context['linkProperties']['id'] = $this->id . '-' . $this->tabIndex . '-tab';
-                $context['linkProperties']['data-toggle'] = 'tab';
+                $context['linkProperties']['data-bs-toggle'] = 'tab';
                 $context['linkProperties']['role'] = 'tab';
 
                 if (is_callable($context['tab']) && !is_string($context['tab'])) {

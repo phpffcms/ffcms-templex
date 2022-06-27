@@ -64,7 +64,8 @@ class Dom
         'rel', 'title', 'alt', // links
         'type', 'method', 'checked', 'selected', 'placeHolder', 'value', 'name', 'for', 'enctype', // forms
         'disabled', 'readonly', 'multiple', 'rows', // forms
-        'data-toggle', 'data-target', 'data-dismiss', 'data-bs-toggle', // data-*
+        'data-toggle', 'data-target', 'data-dismiss', // data-*
+        'data-bs-toggle', 'data-bs-target', 'data-bs-dismiss', // data-bs-*
         'aria-controls', 'aria-expanded', 'aria-label', 'aria-hidden', // area-*
         'role' // etc
     ];

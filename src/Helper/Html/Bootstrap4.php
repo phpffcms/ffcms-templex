@@ -66,16 +66,15 @@ class Bootstrap4 implements ExtensionInterface
             return null;
         }
 
-        return (new Dom())->div(function () use ($text, $html) {
+        return (new Dom())->div(function () use ($text, $html){
             if (!$html) {
-                $text = htmlspecialchars($text, null, 'UTF-8');
+                $text = htmlspecialchars($text);
             }
-            // add "dismiss" icon with javascript close features
-            $text .= (new Dom())->button(function () {
-                return (new Dom())->span(function () {
-                    return "&times;";
-                }, ['aria-hidden' => 'true']);
-            }, ['type' => 'button', 'class' => 'close', 'data-dismiss' => 'alert', 'aria-label' => 'Close']);
+
+            $text .= (new Dom())->button(function(){
+                return '';
+            }, ['type' => 'button', 'class' => 'btn-close', 'data-bs-dismiss' => 'alert', 'aria-label' => 'Close']);
+
             return $text;
         }, ['class' => 'alert alert-' . $type . ' alert-dismissible fade show', 'role' => 'alert']);
     }
@@ -93,7 +92,7 @@ class Bootstrap4 implements ExtensionInterface
         }
 
         return (new Dom())->span(function () use ($text) {
-            return htmlspecialchars($text, null, 'UTF-8');
+            return htmlspecialchars($text);
         }, ['class' => 'badge badge-' . $type]);
     }
 
@@ -125,7 +124,7 @@ class Bootstrap4 implements ExtensionInterface
             if ($type === 'input') {
                 return null;
             }
-            return htmlspecialchars($text, null, 'UTF-8');
+            return htmlspecialchars($text);
         }, $properties);
     }
 
