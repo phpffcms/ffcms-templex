@@ -2,9 +2,7 @@
 
 namespace Ffcms\Templex;
 
-use Ffcms\Core\Helper\FileSystem\Directory;
-use Ffcms\Templex\Exceptions\Error;
-use Ffcms\Templex\Helper\Html\Bootstrap4;
+use Ffcms\Templex\Helper\Html\Bootstrap5;
 use Ffcms\Templex\Helper\Html\Form;
 use Ffcms\Templex\Helper\Html\Javascript;
 use Ffcms\Templex\Helper\Html\Listing;
@@ -73,7 +71,7 @@ class Engine extends \League\Plates\Engine
             new Table(),
             new Pagination(),
             new Form(),
-            new Bootstrap4(),
+            new Bootstrap5(),
             new Javascript()
         ]);
         // save default directory for fallback override
