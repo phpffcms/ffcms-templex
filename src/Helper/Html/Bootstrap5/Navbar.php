@@ -150,7 +150,7 @@ class Navbar
         }, ['class' => 'navbar-toggler',
             'type' => 'button',
             'data-bs-toggle' => "collapse",
-            'data-target' => '#' . $this->id,
+            'data-bs-target' => '#' . $this->id,
             'aria-controls' => $this->id,
             'aria-expanded' => 'false',
             'aria-label' => 'Toggle navigation'
