@@ -25,9 +25,13 @@ class Select extends StandardField
         }
         unset($properties['options']);
 
-        // check if key-ordering used
-        $keyOrder = (bool)$properties['optionsKey'];
-        unset($properties['optionsKey']);
+        // check if key-ordering used. 
+        // MEMO: (bool) with undefined and some shit leads to php halt ..
+        $keyOrder = false;
+        if (isset($properties['optionsKey'])) {
+            $keyOrder = (bool)$properties['optionsKey'];
+            unset($properties['optionsKey']);
+        }
 
         // set name & ids
         $properties['name'] = $this->getUniqueFieldName();
@@ -45,7 +49,7 @@ class Select extends StandardField
                 }
 
                 $opthtml .= (new Dom())->option(function () use ($val) {
-                    return htmlentities($val, null, 'UTF-8');
+                    return htmlentities($val);
                 }, $optpr);
             }
 
