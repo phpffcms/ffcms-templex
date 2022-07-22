@@ -75,7 +75,7 @@ class Li
                     $text = $text();
                 }
                 if (!(bool)($this->context['html'] ?? false)) {
-                    $text = htmlentities($text, null, 'UTF-8');
+                    $text = htmlentities($text);
                 }
 
                 return $text;
@@ -104,7 +104,7 @@ class Li
             // build link anchor with text & dropdown id
             $html = (new Dom())->a(function () use ($text) {
                 if (!(bool)($this->properties['html'] ?? false)) {
-                    $text = htmlentities($text, null, 'UTF-8');
+                    $text = htmlentities($text);
                 }
                 return $text;
             }, ($this->properties['anchor'] ?? null));
@@ -122,7 +122,7 @@ class Li
                     $item['href'] = $link;
                     $output .= (new Dom())->a(function () use ($text, $item) {
                         if (!(bool)($item['html'] ?? false)) {
-                            $text = htmlentities($text, null, 'UTF-8');
+                            $text = htmlentities($text);
                         }
                         return $text;
                     }, $item);
@@ -158,7 +158,7 @@ class Li
         return (new Dom())->li(function () {
             $text = $this->context ?? null;
             if (!(bool)($this->properties['html'] ?? false)) {
-                $text = htmlspecialchars($text, null, 'UTF-8');
+                $text = htmlspecialchars($text);
             }
 
             return $text;

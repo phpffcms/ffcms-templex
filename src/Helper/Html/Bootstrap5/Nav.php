@@ -2,6 +2,7 @@
 
 namespace Ffcms\Templex\Helper\Html\Bootstrap5;
 
+use Exception;
 use Ffcms\Templex\Helper\Html\Dom;
 use Ffcms\Templex\Helper\Html\Listing;
 use League\Plates\Engine;
@@ -85,7 +86,7 @@ class Nav extends Listing
                 }, ['class' => 'tab-pane ' . ($isActive ? 'active show' : 'fade'), 'id' => $this->id . '-' . $this->tabIndex, 'role' => 'tabpanel']);
 
                 $this->tabIndex++;
-            } else {
+            } elseif($context['smoothEqual'] !== true) {
                 $context['urlEqual'] = true;
             }
 
