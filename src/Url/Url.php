@@ -120,7 +120,7 @@ class Url
         $properties['href'] = self::link($item);
         return (new Dom())->a(function () use ($text, $properties) {
             if (!$properties['html']) {
-                $text = htmlspecialchars($text, null, 'UTF-8');
+                $text = htmlspecialchars($text);
             }
             return $text;
         }, $properties);
