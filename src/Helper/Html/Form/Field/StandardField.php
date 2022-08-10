@@ -59,7 +59,9 @@ abstract class StandardField implements FieldInterface
             $attr .= '-' . str_replace('.', '-', $nesting);
             // check if nesting contains dots
             if (strpos($nesting, '.') === false) {
-                $value = $value[$nesting];
+                if (is_array($value)) {
+                    $value = $value[$nesting];
+                }
             } else {
                 // multiple array nesting exist
                 foreach (explode('.', $nesting) as $path) {
