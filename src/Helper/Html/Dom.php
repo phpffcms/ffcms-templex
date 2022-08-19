@@ -67,7 +67,7 @@ class Dom
         'data-toggle', 'data-target', 'data-dismiss', // data-*
         'data-bs-toggle', 'data-bs-target', 'data-bs-dismiss', // data-bs-*
         'aria-controls', 'aria-expanded', 'aria-label', 'aria-hidden', // area-*
-        'role', 'data-column-defs' // etc
+        'role', 'data-column-defs', 'autocomplete' // etc
     ];
 
     // private variables storage
